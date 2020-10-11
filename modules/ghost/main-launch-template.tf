@@ -21,7 +21,9 @@ data aws_iam_policy_document ghost_ssm {
     actions = [
       "ssm:DescribeParameters"
     ]
-    resources = "*"
+    resources = [
+      "*"
+      ]
   }
   statement {
     effect = "Allow"
