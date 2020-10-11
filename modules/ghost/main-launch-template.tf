@@ -15,7 +15,7 @@ data aws_ami default {
   }
 }
 
-data aws_iam_policy_document ghost {
+data aws_iam_policy_document ghost_ssm {
   statement {
     effect = "Allow"
     actions = [
@@ -45,7 +45,13 @@ resource aws_iam_role ghost {
   assume_role_policy = data.aws_iam_policy_document.ghost_assume.json
 }
 
-resource aws_iam_instance_profile ghost {
+resource "aws_iam_policy" "policy" {
+  name = "ssm-policy"
+  description = "Access to SSM Parameters"
+  policy = data.aws_iam_policy_document.ghost_ssm.json
+}
+
+  resource aws_iam_instance_profile ghost {
   name = local.base_name
   role = aws_iam_role.ghost.name
 }
