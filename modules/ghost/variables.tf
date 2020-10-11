@@ -18,12 +18,12 @@ variable application {
 }
 
 variable smtp_user {
-  type = strint
+  type = string
   description = "smtp user in the ghost config"
 }
 
 variable smtp_password {
-  type = strint
+  type = string
   description = "smtp user password in the ghost config"
 }
 
