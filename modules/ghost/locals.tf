@@ -46,6 +46,7 @@ locals {
 
   database_name     = "ghost_${local.base_name}"
   database_username = "ghost_${substr(strrev(local.base_name), 0, 10)}"
+  database_password = "abc123"
 
   //  s3_bucket_name = "${local.cluster}-ghost-${local.base_name}-${data.aws_caller_identity.current.account_id}"
 

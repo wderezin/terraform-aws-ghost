@@ -5,7 +5,7 @@ resource mysql_database db {
 
 resource mysql_user ghost {
   user               = local.database_username
-  plaintext_password = "abc123"
+  plaintext_password = local.database_password
   host               = "%"
 }
 
