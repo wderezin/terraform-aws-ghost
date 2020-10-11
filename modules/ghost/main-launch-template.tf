@@ -19,10 +19,19 @@ data aws_iam_policy_document ghost_ssm {
   statement {
     effect = "Allow"
     actions = [
-      "ssm:GetParameters"
+      "ssm:DescribeParameters"
+    ]
+    resources = "*"
+  }
+  statement {
+    effect = "Allow"
+    actions = [
+      "ssm:GetParametersByPath",
+      "ssm:GetParameters",
+      "ssm:GetParameter",
     ]
     resources = [
-      "arn:aws:ssm:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:parameter/${local.parameter_prefix}/*"
+      "arn:aws:ssm:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:parameter${local.parameter_prefix}/*"
     ]
   }
 }
