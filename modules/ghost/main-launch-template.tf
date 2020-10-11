@@ -19,15 +19,6 @@ data aws_iam_policy_document ghost_ssm {
   statement {
     effect = "Allow"
     actions = [
-      "ssm:DescribeParameters"
-    ]
-    resources = [
-      "*"
-      ]
-  }
-  statement {
-    effect = "Allow"
-    actions = [
       "ssm:GetParametersByPath",
       "ssm:GetParameters",
       "ssm:GetParameter",
