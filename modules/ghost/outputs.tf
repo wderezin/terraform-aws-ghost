@@ -46,3 +46,18 @@ resource aws_ssm_parameter smpt_password {
   tags        = local.tags
 }
 
+resource aws_ssm_parameter database_host {
+  name        = "${local.parameter_prefix}/database_host"
+  description = "Database Host"
+  type        = "String"
+  value       = local.database_host
+  tags        = local.tags
+}
+
+resource aws_ssm_parameter database_port {
+  name        = "${local.parameter_prefix}/database_port"
+  description = "Database Port"
+  type        = "String"
+  value       = local.database_port
+  tags        = local.tags
+}

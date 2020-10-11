@@ -51,6 +51,9 @@ locals {
   smtp_user = var.smtp_user
   smtp_password = var.smtp_password
 
+  database_host = var.database_host
+  database_port = var.database_port
+
   //  s3_bucket_name = "${local.cluster}-ghost-${local.base_name}-${data.aws_caller_identity.current.account_id}"
 
   viewer_request_lambda_arns = var.viewer_request_lambda_arns
