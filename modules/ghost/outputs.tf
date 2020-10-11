@@ -1,29 +1,38 @@
 
-resource aws_ssm_parameter db_connection {
-  name        = "${local.parameter_prefix}/db_connection"
-  description = "Ghost Database Host"
+resource aws_ssm_parameter database_host {
+  name        = "${local.parameter_prefix}/database_host"
+  description = "Database Host"
   type        = "String"
-  value       = mysql_database.db.connection
+  value       = local.database_host
+  tags        = local.tags
 }
 
-resource aws_ssm_parameter db_name {
-  name        = "${local.parameter_prefix}/db_name"
+resource aws_ssm_parameter database_port {
+  name        = "${local.parameter_prefix}/database_port"
+  description = "Database Port"
+  type        = "String"
+  value       = local.database_port
+  tags        = local.tags
+}
+
+resource aws_ssm_parameter database_name {
+  name        = "${local.parameter_prefix}/database_name"
   description = "Ghost Database Name"
   type        = "String"
   value       = local.database_name
   tags        = local.tags
 }
 
-resource aws_ssm_parameter db_user {
-  name        = "${local.parameter_prefix}/db_user"
+resource aws_ssm_parameter database_user {
+  name        = "${local.parameter_prefix}/database_user"
   description = "Ghost Database User"
   type        = "String"
   value       = local.database_username
   tags        = local.tags
 }
 
-resource aws_ssm_parameter db_password {
-  name        = "${local.parameter_prefix}/db_password"
+resource aws_ssm_parameter database_password {
+  name        = "${local.parameter_prefix}/database_password"
   description = "Ghost Database User Password"
   type        = "SecureString"
   value       = local.database_password
@@ -43,21 +52,5 @@ resource aws_ssm_parameter smpt_password {
   description = "Ghost SMTP User Password"
   type        = "SecureString"
   value       = local.smtp_password
-  tags        = local.tags
-}
-
-resource aws_ssm_parameter database_host {
-  name        = "${local.parameter_prefix}/database_host"
-  description = "Database Host"
-  type        = "String"
-  value       = local.database_host
-  tags        = local.tags
-}
-
-resource aws_ssm_parameter database_port {
-  name        = "${local.parameter_prefix}/database_port"
-  description = "Database Port"
-  type        = "String"
-  value       = local.database_port
   tags        = local.tags
 }
