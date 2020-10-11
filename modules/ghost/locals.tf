@@ -9,7 +9,7 @@ locals {
   //  ssm_prefix = "/project/${var.project_id}/ghost/"
 
   application = var.application
-  parameter_prefix = "/application/{$local.application}"
+  parameter_prefix = "/application/${local.application}"
 
   tags = merge(
     //    Default Tag Values

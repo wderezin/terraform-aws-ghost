@@ -4,18 +4,21 @@ resource aws_ssm_parameter db_name {
   description = "Ghost Database Name"
   type        = "String"
   value       = local.database_name
+  tags        = local.tags
 }
 resource aws_ssm_parameter db_user {
   name        = "${local.parameter_prefix}/db_user"
   description = "Ghost Database User"
   type        = "String"
   value       = local.database_username
+  tags        = local.tags
 }
 resource aws_ssm_parameter db_password {
   name        = "${local.parameter_prefix}/db_password"
   description = "Ghost Database User Password"
   type        = "SecureString"
   value       = local.database_password
+  tags        = local.tags
 }
 
 //resource aws_ssm_parameter db_host {
