@@ -45,10 +45,11 @@ resource aws_iam_role ghost {
   assume_role_policy = data.aws_iam_policy_document.ghost_assume.json
 }
 
-resource "aws_iam_policy" "policy" {
+resource aws_iam_role_policy policy {
   name = "ssm-policy"
   description = "Access to SSM Parameters"
   policy = data.aws_iam_policy_document.ghost_ssm.json
+  role = aws_iam_role.ghost.id
 }
 
   resource aws_iam_instance_profile ghost {
