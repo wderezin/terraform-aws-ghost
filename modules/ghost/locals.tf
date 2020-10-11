@@ -24,6 +24,16 @@ locals {
     }
   )
 
+  ec2_tags = merge({
+    Application : var.application
+    backup : "default"
+  },
+  local.tags,
+  {
+    SSHUSER : "ubuntu"
+  }
+  )
+
   base_name = "${local.application}"
 
   //  ***** Network Settings
