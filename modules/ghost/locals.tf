@@ -1,8 +1,4 @@
 
-data aws_region current {}
-
-data aws_caller_identity current {}
-
 locals {
   //  project_name = "ghost-${var.project_id}"
   //  global_name  = "ghost-${var.project_id}-${data.aws_caller_identity.current.account_id}-${data.aws_region.current.name}"
