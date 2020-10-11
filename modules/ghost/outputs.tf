@@ -54,3 +54,11 @@ resource aws_ssm_parameter smpt_password {
   value       = local.smtp_password
   tags        = local.tags
 }
+
+resource aws_ssm_parameter web_hostname {
+  name        = "${local.parameter_prefix}/web_hostname"
+  description = "the http name of the website"
+  type        = "String"
+  value       = local.www_fqdn
+  tags        = local.tags
+}
