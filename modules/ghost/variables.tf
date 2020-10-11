@@ -17,6 +17,17 @@ variable application {
   description = "Application Id Name"
 }
 
+variable smtp_user {
+  type = strint
+  description = "smtp user in the ghost config"
+}
+
+variable smtp_password {
+  type = strint
+  description = "smtp user password in the ghost config"
+}
+
+
 //variable infrastructure_info {
 //  type = object({
 //    vpc_id : string

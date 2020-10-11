@@ -1,4 +1,11 @@
 
+resource aws_ssm_parameter db_connection {
+  name        = "${local.parameter_prefix}/db_connection"
+  description = "Ghost Database Host"
+  type        = "String"
+  value       = mysql_database.db.connection
+}
+
 resource aws_ssm_parameter db_name {
   name        = "${local.parameter_prefix}/db_name"
   description = "Ghost Database Name"
@@ -6,6 +13,7 @@ resource aws_ssm_parameter db_name {
   value       = local.database_name
   tags        = local.tags
 }
+
 resource aws_ssm_parameter db_user {
   name        = "${local.parameter_prefix}/db_user"
   description = "Ghost Database User"
@@ -13,6 +21,7 @@ resource aws_ssm_parameter db_user {
   value       = local.database_username
   tags        = local.tags
 }
+
 resource aws_ssm_parameter db_password {
   name        = "${local.parameter_prefix}/db_password"
   description = "Ghost Database User Password"
@@ -21,16 +30,19 @@ resource aws_ssm_parameter db_password {
   tags        = local.tags
 }
 
-//resource aws_ssm_parameter db_host {
-//  name        = "${local.parameter_prefix}/db_host"
-//  description = "Ghost Database Host"
-//  type        = "String"
-//  value       = mysql_user.ghost.password
-//}
-
-output database_info {
-  value = {
-    DATABASE_NAME = mysql_database.db.name
-    DATABASE_USER = mysql_user.ghost.user
-  }
+resource aws_ssm_parameter smtp_user {
+  name        = "${local.parameter_prefix}/smtp_user"
+  description = "Ghost SMTP User"
+  type        = "String"
+  value       = local.smtp_user
+  tags        = local.tags
 }
+
+resource aws_ssm_parameter smpt_password {
+  name        = "${local.parameter_prefix}/smtp_password"
+  description = "Ghost SMTP User Password"
+  type        = "SecureString"
+  value       = local.smtp_password
+  tags        = local.tags
+}
+

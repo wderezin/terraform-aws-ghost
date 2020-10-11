@@ -48,6 +48,9 @@ locals {
   database_username = "ghost_${substr(strrev(local.base_name), 0, 10)}"
   database_password = "abc123"
 
+  smtp_user = var.smtp_user
+  smtp_password = var.smtp_password
+
   //  s3_bucket_name = "${local.cluster}-ghost-${local.base_name}-${data.aws_caller_identity.current.account_id}"
 
   viewer_request_lambda_arns = var.viewer_request_lambda_arns
