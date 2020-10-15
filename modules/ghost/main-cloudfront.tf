@@ -124,7 +124,7 @@ resource aws_cloudfront_distribution www {
   dynamic ordered_cache_behavior {
     for_each = [
       "/ghost/*",
-      "/*/api/*"
+      "*/api/*"
     ]
     content {
 
