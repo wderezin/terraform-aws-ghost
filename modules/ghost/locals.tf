@@ -4,7 +4,7 @@ locals {
   //  global_name  = "ghost-${var.project_id}-${data.aws_caller_identity.current.account_id}-${data.aws_region.current.name}"
   //  ssm_prefix = "/project/${var.project_id}/ghost/"
 
-  application = var.application
+  application      = var.application
   parameter_prefix = "/application/${local.application}"
 
   tags = merge(
@@ -23,11 +23,11 @@ locals {
   ec2_tags = merge({
     Application : var.application
     backup : "default"
-  },
-  local.tags,
-  {
-    SSHUSER : "ubuntu"
-  }
+    },
+    local.tags,
+    {
+      SSHUSER : "ubuntu"
+    }
   )
 
   base_name = "${local.application}"
@@ -54,7 +54,7 @@ locals {
   database_username = "ghost_${substr(strrev(local.base_name), 0, 10)}"
   database_password = "abc123"
 
-  smtp_user = var.smtp_user
+  smtp_user     = var.smtp_user
   smtp_password = var.smtp_password
 
   database_host = var.database_host

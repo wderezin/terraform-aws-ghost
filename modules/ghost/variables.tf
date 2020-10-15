@@ -18,22 +18,22 @@ variable application {
 }
 
 variable smtp_user {
-  type = string
+  type        = string
   description = "smtp user in the ghost config"
 }
 
 variable smtp_password {
-  type = string
+  type        = string
   description = "smtp user password in the ghost config"
 }
 
 variable database_host {
-  type = string
+  type        = string
   description = "database hostname"
 }
 
 variable database_port {
-  type = string
+  type        = string
   description = "database port"
 }
 

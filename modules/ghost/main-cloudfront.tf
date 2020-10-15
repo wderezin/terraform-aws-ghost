@@ -121,42 +121,55 @@ resource aws_cloudfront_distribution www {
     }
   }
 
-  ordered_cache_behavior {
-    path_pattern = [
+  dynamic ordered_cache_behavior {
+    for_each = [
       "/ghost/*",
       "/*/api/*"
     ]
-    allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
-    cached_methods   = ["HEAD", "GET"]
-    target_origin_id = local.cms_origin_id
+    content {
 
-    forwarded_values {
-      query_string = true
-      //      query_string_cache_keys = []
-      headers = [
-        "Origin",
-      ]
+      path_pattern = ordered_cache_behavior.value
+      allowed_methods = [
+        "DELETE",
+        "GET",
+        "HEAD",
+        "OPTIONS",
+        "PATCH",
+        "POST",
+      "PUT"]
+      cached_methods = [
+        "HEAD",
+      "GET"]
+      target_origin_id = local.cms_origin_id
 
-      cookies {
-        forward = "all"
+      forwarded_values {
+        query_string = true
+        //      query_string_cache_keys = []
+        headers = [
+          "Origin",
+        ]
+
+        cookies {
+          forward = "all"
+        }
       }
-    }
 
-    dynamic lambda_function_association {
-      for_each = local.viewer_request_lambda_arns
-      content {
-        event_type   = "viewer-request"
-        lambda_arn   = lambda_function_association.value
-        include_body = false
+      dynamic lambda_function_association {
+        for_each = local.viewer_request_lambda_arns
+        content {
+          event_type   = "viewer-request"
+          lambda_arn   = lambda_function_association.value
+          include_body = false
+        }
       }
-    }
 
-    //    3600 1 hour 86400 is 1 day and
-    min_ttl                = 0
-    default_ttl            = 0
-    max_ttl                = 0
-    compress               = true
-    viewer_protocol_policy = "redirect-to-https"
+      //    3600 1 hour 86400 is 1 day and
+      min_ttl                = 0
+      default_ttl            = 0
+      max_ttl                = 0
+      compress               = true
+      viewer_protocol_policy = "redirect-to-https"
+    }
   }
 }
 

@@ -50,19 +50,19 @@ data aws_iam_policy_document ghost_assume {
 }
 
 resource aws_iam_role ghost {
-  name = local.base_name
-  path = "/"
-  tags = local.tags
+  name               = local.base_name
+  path               = "/"
+  tags               = local.tags
   assume_role_policy = data.aws_iam_policy_document.ghost_assume.json
 }
 
 resource aws_iam_role_policy policy {
-  name = "ssm-policy"
+  name   = "ssm-policy"
   policy = data.aws_iam_policy_document.ghost_ssm.json
-  role = aws_iam_role.ghost.id
+  role   = aws_iam_role.ghost.id
 }
 
-  resource aws_iam_instance_profile ghost {
+resource aws_iam_instance_profile ghost {
   name = local.base_name
   role = aws_iam_role.ghost.name
 }
@@ -74,9 +74,9 @@ resource aws_launch_template default {
 
   disable_api_termination = true
 
-    iam_instance_profile {
-      name = aws_iam_instance_profile.ghost.name
-    }
+  iam_instance_profile {
+    name = aws_iam_instance_profile.ghost.name
+  }
 
   instance_initiated_shutdown_behavior = "stop"
   //  instance_initiated_shutdown_behavior = "terminate"
