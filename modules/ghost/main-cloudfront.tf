@@ -122,7 +122,10 @@ resource aws_cloudfront_distribution www {
   }
 
   ordered_cache_behavior {
-    path_pattern     = "/ghost/*"
+    path_pattern = [
+      "/ghost/*",
+      "/*/api/*"
+    ]
     allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
     cached_methods   = ["HEAD", "GET"]
     target_origin_id = local.cms_origin_id
