@@ -112,9 +112,9 @@ resource aws_cloudfront_distribution www {
         }
       }
 
-      //    3600 1 hour 86400 is 1 day and
-      min_ttl                = 3600
-      default_ttl            = 86400
+      //    3600 1 hour 86400 is 1 day and 604800 is 1 week
+      min_ttl                = 86400
+      default_ttl            = 604800
       max_ttl                = 31536000
       compress               = true
       viewer_protocol_policy = "redirect-to-https"
