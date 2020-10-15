@@ -50,18 +50,20 @@ resource aws_cloudfront_distribution www {
     }
   }
 
+
   default_cache_behavior {
-    allowed_methods  = ["GET", "HEAD", "OPTIONS"]
-    cached_methods   = ["GET", "HEAD", "OPTIONS"]
+    allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
+    cached_methods   = ["HEAD", "GET"]
     target_origin_id = local.cms_origin_id
 
     forwarded_values {
-      query_string = false
+      query_string = true
       headers = [
-        "Origin"
+        "Origin",
       ]
+
       cookies {
-        forward = "none"
+        forward = "all"
       }
     }
 
@@ -74,9 +76,10 @@ resource aws_cloudfront_distribution www {
       }
     }
 
+    //    3600 1 hour 86400 is 1 day and
     min_ttl                = 0
-    default_ttl            = 30
-    max_ttl                = 60
+    default_ttl            = 0
+    max_ttl                = 0
     compress               = true
     viewer_protocol_policy = "redirect-to-https"
   }
@@ -121,57 +124,6 @@ resource aws_cloudfront_distribution www {
     }
   }
 
-  dynamic ordered_cache_behavior {
-    for_each = [
-      "/ghost/*",
-      "/members/*",
-      "*/api/*"
-    ]
-    content {
-
-      path_pattern = ordered_cache_behavior.value
-      allowed_methods = [
-        "DELETE",
-        "GET",
-        "HEAD",
-        "OPTIONS",
-        "PATCH",
-        "POST",
-      "PUT"]
-      cached_methods = [
-        "HEAD",
-      "GET"]
-      target_origin_id = local.cms_origin_id
-
-      forwarded_values {
-        query_string = true
-        //      query_string_cache_keys = []
-        headers = [
-          "Origin",
-        ]
-
-        cookies {
-          forward = "all"
-        }
-      }
-
-      dynamic lambda_function_association {
-        for_each = local.viewer_request_lambda_arns
-        content {
-          event_type   = "viewer-request"
-          lambda_arn   = lambda_function_association.value
-          include_body = false
-        }
-      }
-
-      //    3600 1 hour 86400 is 1 day and
-      min_ttl                = 0
-      default_ttl            = 0
-      max_ttl                = 0
-      compress               = true
-      viewer_protocol_policy = "redirect-to-https"
-    }
-  }
 }
 
 resource aws_route53_record ghost {
