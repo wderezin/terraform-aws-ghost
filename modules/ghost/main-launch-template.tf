@@ -15,67 +15,16 @@ data aws_ami default {
   }
 }
 
-data aws_iam_policy_document ghost_ssm {
-  statement {
-    effect = "Allow"
-    actions = [
-      "ec2:DescribeTags"
-    ]
-    resources = [
-      "*"
-    ]
-  }
-  statement {
-    effect = "Allow"
-    actions = [
-      "ssm:GetParametersByPath",
-      "ssm:GetParameters",
-      "ssm:GetParameter",
-    ]
-    resources = [
-      "arn:aws:ssm:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:parameter${local.parameter_prefix}/*"
-    ]
-  }
-}
-
-data aws_iam_policy_document ghost_assume {
-  statement {
-    actions = ["sts:AssumeRole"]
-
-    principals {
-      type        = "Service"
-      identifiers = ["ec2.amazonaws.com"]
-    }
-  }
-}
-
-resource aws_iam_role ghost {
-  name               = local.base_name
-  path               = "/"
-  tags               = local.tags
-  assume_role_policy = data.aws_iam_policy_document.ghost_assume.json
-}
-
-resource aws_iam_role_policy policy {
-  name   = "ssm-policy"
-  policy = data.aws_iam_policy_document.ghost_ssm.json
-  role   = aws_iam_role.ghost.id
-}
-
-resource aws_iam_instance_profile ghost {
-  name = local.base_name
-  role = aws_iam_role.ghost.name
-}
-
 resource aws_launch_template default {
   name          = local.base_name
   image_id      = data.aws_ami.default.id
   instance_type = "t3a.micro"
 
   disable_api_termination = true
+  update_default_version = true
 
   iam_instance_profile {
-    name = aws_iam_instance_profile.ghost.name
+    name = aws_iam_instance_profile.ec2_profile.name
   }
 
   instance_initiated_shutdown_behavior = "stop"
@@ -99,7 +48,7 @@ resource aws_launch_template default {
 
   tag_specifications {
     resource_type = "instance"
-    tags          = local.tags
+    tags          = local.ec2_tags
   }
 
 }

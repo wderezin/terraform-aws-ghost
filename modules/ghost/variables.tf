@@ -27,16 +27,12 @@ variable smtp_password {
   description = "smtp user password in the ghost config"
 }
 
-variable database_host {
-  type        = string
-  description = "database hostname"
+variable cluster_info {
+  type = object({
+    database_host = string,
+    database_port = string,
+  })
 }
-
-variable database_port {
-  type        = string
-  description = "database port"
-}
-
 
 //variable infrastructure_info {
 //  type = object({
