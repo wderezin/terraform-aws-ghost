@@ -17,10 +17,10 @@ variable enable_root_domain {
   description = "Create root domain DNS record.  Will be redirected to web_hostname"
 }
 
-variable viewer_request_lambda_arn {
-  type        = string
-  default     = null
-  description = "A lambda@edge cloudfront view-requests"
+variable viewer_request_lambda_arns {
+  type        = list(string)
+  default     = []
+  description = "A list of lambda@edge cloudfront view-requests"
 }
 
 //variable vpc_cluster_tag_search_override {

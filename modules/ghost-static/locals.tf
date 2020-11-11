@@ -1,11 +1,11 @@
 
+data aws_caller_identity current {}
+data aws_region current {}
+
 locals {
-  //  project_name = "ghost-${var.project_id}"
-  //  global_name  = "ghost-${var.project_id}-${data.aws_caller_identity.current.account_id}-${data.aws_region.current.name}"
 
   application      = var.application
-  // ssm
-  parameter_prefix = "/application/${local.application}/"
+  parameter_prefix = "/application/${local.application}"
 
   tags = merge(
     //    Default Tag Values
@@ -20,15 +20,14 @@ locals {
     }
   )
 
+
   ec2_tags = merge({
     Application : var.application
     backup : "default"
     },
     local.tags,
     {
-      Name : var.application
-      SSHUSER : "ubuntu",
-      SSM_PREFIX : local.parameter_prefix
+      SSHUSER : "ubuntu"
     }
   )
 
@@ -49,13 +48,12 @@ locals {
   www_fqdn      = "${var.web_hostname}.${var.dns_zone_name}"
   cms_fqdn      = "${var.cms_hostname}.${var.dns_zone_name}"
 
-  cms_bucket_name = "${replace(local.application, "_", "-")}-ghost-${data.aws_caller_identity.current.account_id}"
-  web_bucket_name = "${replace(local.application, "_", "-")}-website-${data.aws_caller_identity.current.account_id}"
+  cms_bucket_name = "${local.cms_fqdn}-${data.aws_caller_identity.current.account_id}"
+  web_bucket_name = "${local.www_fqdn}-${data.aws_caller_identity.current.account_id}"
 
-  buckets = toset([ local.cms_bucket_name, local.web_bucket_name ])
   instance_profile_name = "${local.cms_fqdn}"
 
-  //  ***** CLOUDFRONT main-cloudfront-s3.tf
+  //  ***** CLOUDFRONT main-cloudfront.tf
   acm_cert_arn = var.acm_cert_arn
 
   database_name     = "ghost_${local.base_name}"
@@ -65,9 +63,8 @@ locals {
   smtp_user     = var.smtp_user
   smtp_password = var.smtp_password
 
-  database_host = var.cluster_info.database_host
-  database_port = var.cluster_info.database_port
+  database_host = var.database_host
+  database_port = var.database_port
 
-  use_default_request_lambda = var.viewer_request_lambda_arn == null
-  viewer_request_lambda_arn = local.use_default_request_lambda ?  [ module.default-cloudfront-s3-viewer-request-lambda[0].qualified_arn ] : [ var.viewer_request_lambda_arn ]
+  viewer_request_lambda_arns = var.viewer_request_lambda_arns
 }

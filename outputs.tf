@@ -1,4 +1,14 @@
 
+output cluster_info {
+  value = {
+    database_host     = aws_rds_cluster.default.endpoint
+    database_port     = aws_rds_cluster.default.port
+    database_name     = aws_rds_cluster.default.database_name
+    database_username = aws_rds_cluster.default.master_username
+    database_password = aws_rds_cluster.default.master_password
+  }
+}
+
 output database_info {
   value = {
     host     = aws_rds_cluster.default.endpoint
