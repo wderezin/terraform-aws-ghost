@@ -23,6 +23,18 @@ variable viewer_request_lambda_arn {
   description = "A lambda@edge cloudfront view-requests"
 }
 
+variable smtp_user {
+  type        = string
+  default     = null
+  description = "smtp user in the ghost config"
+}
+
+variable smtp_password {
+  type        = string
+  default     = null
+  description = "smtp user password in the ghost config"
+}
+
 //variable vpc_cluster_tag_search_override {
 //  type        = string
 //  default     = null

@@ -3,7 +3,7 @@ locals {
   //  project_name = "ghost-${var.project_id}"
   //  global_name  = "ghost-${var.project_id}-${data.aws_caller_identity.current.account_id}-${data.aws_region.current.name}"
 
-  application      = var.application
+  application = var.application
   // ssm
   parameter_prefix = "/application/${local.application}/"
 
@@ -52,7 +52,7 @@ locals {
   cms_bucket_name = "${replace(local.application, "_", "-")}-ghost-${data.aws_caller_identity.current.account_id}"
   web_bucket_name = "${replace(local.application, "_", "-")}-website-${data.aws_caller_identity.current.account_id}"
 
-  buckets = toset([ local.cms_bucket_name, local.web_bucket_name ])
+  buckets               = toset([local.cms_bucket_name, local.web_bucket_name])
   instance_profile_name = "${local.cms_fqdn}"
 
   //  ***** CLOUDFRONT main-cloudfront-s3.tf
@@ -69,5 +69,5 @@ locals {
   database_port = var.cluster_info.database_port
 
   use_default_request_lambda = var.viewer_request_lambda_arn == null
-  viewer_request_lambda_arn = local.use_default_request_lambda ?  [ module.default-cloudfront-s3-viewer-request-lambda[0].qualified_arn ] : [ var.viewer_request_lambda_arn ]
+  viewer_request_lambda_arn  = local.use_default_request_lambda ? [module.default-cloudfront-s3-viewer-request-lambda[0].qualified_arn] : [var.viewer_request_lambda_arn]
 }

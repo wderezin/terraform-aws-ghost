@@ -17,16 +17,6 @@ variable application {
   description = "Application Id Name"
 }
 
-variable smtp_user {
-  type        = string
-  description = "smtp user in the ghost config"
-}
-
-variable smtp_password {
-  type        = string
-  description = "smtp user password in the ghost config"
-}
-
 variable cluster_info {
   type = object({
     database_host = string,

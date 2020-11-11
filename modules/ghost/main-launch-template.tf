@@ -21,7 +21,7 @@ resource aws_launch_template default {
   instance_type = "t3a.micro"
 
   disable_api_termination = true
-  update_default_version = true
+  update_default_version  = true
 
   iam_instance_profile {
     name = aws_iam_instance_profile.ec2_profile.name

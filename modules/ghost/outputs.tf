@@ -40,6 +40,7 @@ resource aws_ssm_parameter database_password {
 }
 
 resource aws_ssm_parameter smtp_user {
+  count       = local.smtp_user != null ? 1 : 0
   name        = "${local.parameter_prefix}smtp_user"
   description = "Ghost SMTP User"
   type        = "String"
@@ -48,6 +49,7 @@ resource aws_ssm_parameter smtp_user {
 }
 
 resource aws_ssm_parameter smpt_password {
+  count       = local.smtp_password != null ? 1 : 0
   name        = "${local.parameter_prefix}smtp_password"
   description = "Ghost SMTP User Password"
   type        = "SecureString"

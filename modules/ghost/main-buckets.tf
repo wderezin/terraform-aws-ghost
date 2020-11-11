@@ -10,9 +10,9 @@ resource aws_s3_bucket cms {
   }
 
   lifecycle_rule {
-    id = "auto-delete-after-30-days"
-    prefix = ""
-    enabled = true
+    id                                     = "auto-delete-after-30-days"
+    prefix                                 = ""
+    enabled                                = true
     abort_incomplete_multipart_upload_days = 1
 
     noncurrent_version_expiration {
@@ -28,7 +28,7 @@ resource aws_s3_bucket web {
   tags          = local.tags
 
   versioning {
-//    No need to version as it can be reproduced from the CMS
+    //    No need to version as it can be reproduced from the CMS
     enabled = false
   }
 }
@@ -57,7 +57,7 @@ data aws_iam_policy_document web {
   }
 }
 
-resource aws_s3_bucket_policy web{
+resource aws_s3_bucket_policy web {
   bucket = aws_s3_bucket.web.id
   policy = data.aws_iam_policy_document.web.json
 }
