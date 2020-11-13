@@ -32,7 +32,7 @@ locals {
     }
   )
 
-  base_name = "${local.application}"
+  base_name = local.application
 
   //  ***** Network Settings
   //  vpc_id     = var.infrastructure_info.vpc_id
