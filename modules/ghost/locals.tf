@@ -53,7 +53,7 @@ locals {
   web_bucket_name = "${replace(local.application, "_", "-")}-website-${data.aws_caller_identity.current.account_id}"
 
   buckets               = toset([local.cms_bucket_name, local.web_bucket_name])
-  instance_profile_name = "${local.cms_fqdn}"
+  instance_profile_name = local.cms_fqdn
 
   //  ***** CLOUDFRONT main-cloudfront-s3.tf
   acm_cert_arn = var.acm_cert_arn
