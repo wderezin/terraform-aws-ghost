@@ -36,7 +36,7 @@ locals {
 
   //  ***** Network Settings
   //  vpc_id     = var.infrastructure_info.vpc_id
-  //  subnet_ids = var.infrastructure_info.subnet_ids
+  subnet_ids = var.cluster_info.subnet_ids
 
   //  ***** DNS Settings
   enable_root_domain_count = var.enable_root_domain ? 1 : 0
