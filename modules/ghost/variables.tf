@@ -21,15 +21,7 @@ variable cluster_info {
   type = object({
     database_host = string,
     database_port = string,
-    subnet_ids : list(string),
-    log_bucket_name : string
+    subnet_ids : list(string)
+//    log_bucket_name : string
   })
 }
-
-//variable infrastructure_info {
-//  type = object({
-//    vpc_id : string
-//    subnet_ids : list(string)
-//    log_bucket_name : string
-//  })
-//}
