@@ -27,8 +27,7 @@ resource aws_launch_template default {
     name = aws_iam_instance_profile.ec2_profile.name
   }
 
-  instance_initiated_shutdown_behavior = "stop"
-  //  instance_initiated_shutdown_behavior = "terminate"
+  instance_initiated_shutdown_behavior = "terminate"
 
   //  vpc_security_group_ids = [
   //    aws_security_group.instance.id
