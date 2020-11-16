@@ -30,11 +30,11 @@ resource aws_cloudfront_distribution www {
     }
   }
 
-//  custom_error_response {
-//    error_code =
-//    response_code       = 404
-//    response_page_path = "/404/"
-//  }
+  custom_error_response {
+    error_code         = 404
+    response_code      = 404
+    response_page_path = "/404/"
+  }
 
   origin {
     domain_name = aws_s3_bucket.web.bucket_regional_domain_name
