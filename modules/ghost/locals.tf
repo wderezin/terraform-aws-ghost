@@ -43,6 +43,8 @@ locals {
 
   cloudfront_aliases = var.enable_root_domain ? [local.www_fqdn, local.dns_zone_name] : [local.www_fqdn]
 
+  inactive_seconds = var.inactive_seconds
+
   dns_zone_name = var.dns_zone_name
   www_hostname  = var.web_hostname
   cms_hostname  = var.cms_hostname

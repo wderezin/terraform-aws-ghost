@@ -35,6 +35,12 @@ variable smtp_password {
   description = "smtp user password in the ghost config"
 }
 
+variable inactive_seconds {
+  type        = number
+  default     = 3600
+  description = "Number of seconds until ghost CMS is considered inactive and stops"
+}
+
 //variable vpc_cluster_tag_search_override {
 //  type        = string
 //  default     = null

@@ -30,7 +30,7 @@ resource aws_cloudfront_distribution www {
     }
   }
 
-//  permission denied from s3
+  //  permission denied from s3
   custom_error_response {
     error_code         = 403
     response_code      = 404

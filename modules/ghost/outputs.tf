@@ -96,3 +96,11 @@ resource aws_ssm_parameter cms_bucket {
   value       = aws_s3_bucket.cms.bucket
   tags        = local.tags
 }
+
+resource aws_ssm_parameter inactive_seconds {
+  name        = "${local.parameter_prefix}inactive_seconds"
+  description = "Number of seconds until CMS is considered inactive before stopping"
+  type        = "String"
+  value       = local.inactive_seconds
+  tags        = local.tags
+}
