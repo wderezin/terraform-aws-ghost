@@ -45,7 +45,7 @@ resource aws_cloudfront_distribution www {
   }
 
   default_cache_behavior {
-    allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
+    allowed_methods  = ["GET", "HEAD", "OPTIONS"]
     cached_methods   = ["HEAD", "GET"]
     target_origin_id = local.web_origin_id
 
