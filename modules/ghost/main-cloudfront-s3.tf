@@ -30,6 +30,11 @@ resource aws_cloudfront_distribution www {
     }
   }
 
+  custom_error_response {
+    response_code      = 404
+    response_page_path = "/404/"
+  }
+
   origin {
     domain_name = aws_s3_bucket.web.bucket_regional_domain_name
     origin_id   = local.web_origin_id
@@ -43,6 +48,8 @@ resource aws_cloudfront_distribution www {
     allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
     cached_methods   = ["HEAD", "GET"]
     target_origin_id = local.web_origin_id
+
+
 
     forwarded_values {
       query_string = false
