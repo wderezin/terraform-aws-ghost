@@ -48,7 +48,7 @@ resource aws_s3_bucket_public_access_block access {
 data aws_iam_policy_document web {
   statement {
     actions   = ["s3:ListBucket"]
-    resources = ["${aws_s3_bucket.web.arn}"]
+    resources = [aws_s3_bucket.web.arn]
 
     principals {
       type        = "AWS"
