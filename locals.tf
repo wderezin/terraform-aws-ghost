@@ -30,7 +30,7 @@ locals {
   vpc_id             = var.network_info.vpc_id
   cidr_blocks        = var.network_info.cidr_blocks
   subnet_ids         = var.network_info.subnet_ids
-  security_group_ids = concat(var.network_info.security_group_is, [aws_security_group.rds.id])
+  security_group_ids = concat(var.network_info.security_group_ids, [aws_security_group.rds.id])
 
   password_change_id = var.password_change_id
 
