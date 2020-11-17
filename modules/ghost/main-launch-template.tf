@@ -1,8 +1,8 @@
 
 data aws_ami default {
   most_recent = true
-  name_regex  = "^daringway-ghost-*"
-  owners      = ["705630809193"]
+  name_regex  = "^ubuntu/images/hvm-ssd/ubuntu-bionic-20.04-amd64-server-*"
+  owners      = ["099720109477"]
 
   filter {
     name   = "is-public"
@@ -26,6 +26,8 @@ resource aws_launch_template default {
   iam_instance_profile {
     name = aws_iam_instance_profile.ec2_profile.name
   }
+
+  user_data = filebase64("${path.module}/example.sh")
 
   instance_initiated_shutdown_behavior = "terminate"
 
