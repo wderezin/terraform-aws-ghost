@@ -1,4 +1,21 @@
 
+resource aws_route53_record cms {
+  zone_id = data.aws_route53_zone.zone.zone_id
+  name    = local.cms_fqdn
+  type    = "A"
+  ttl     = 60
+
+//  We only want to setup the DNS record
+//  It will be updated by ghost-serverless
+  records = [
+    "127.0.0.1"
+  ]
+
+  lifecycle {
+    ignore_changes = [records, ttl]
+  }
+}
+
 data aws_ami default {
   //  ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-20201026 (ami-0885b1f6bd170450c)
   most_recent = true
