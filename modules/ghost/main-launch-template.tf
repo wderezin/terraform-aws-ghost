@@ -21,34 +21,22 @@ resource aws_launch_template default {
   image_id      = data.aws_ami.default.id
   instance_type = "t3a.micro"
 
-  disable_api_termination = true
+//  disable_api_termination = true
   update_default_version  = true
 
   iam_instance_profile {
     name = aws_iam_instance_profile.ec2_profile.name
   }
 
-  vpc_security_group_ids = local.security_groups
   network_interfaces {
     associate_public_ip_address = true
     subnet_id                   = local.subnet_ids[0]
+    security_groups             = local.security_groups
   }
 
   user_data = filebase64("${path.module}/install.sh")
 
   instance_initiated_shutdown_behavior = "terminate"
-
-  //  vpc_security_group_ids = [
-  //    aws_security_group.instance.id
-  //  ]
-
-  //  network_interfaces {
-  //    associate_public_ip_address = true
-  //    subnet_id = data.aws_subnet_ids.all.ids[0]
-  ////    security_groups = [
-  ////      data.aws_subnet_ids.
-  ////    ]
-  //  }
 
   monitoring {
     enabled = true
