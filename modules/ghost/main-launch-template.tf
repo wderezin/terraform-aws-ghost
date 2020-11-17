@@ -37,12 +37,12 @@ resource aws_launch_template default {
   name          = local.base_name
   image_id      = data.aws_ami.default.id
 
-  instance_market_options {
-    market_type = "spot"
-//    spot_options {
-//      spot_instance_type = one-time
-//    }
-  }
+//  instance_market_options {
+//    market_type = "spot"
+////    spot_options {
+////      spot_instance_type = one-time
+////    }
+//  }
 
   instance_type = "t3a.micro"
 
