@@ -29,6 +29,16 @@ data aws_iam_policy_document ec2_access_policy_document {
   statement {
     effect = "Allow"
     actions = [
+      "route53:ChangeResourceRecordSets"
+    ]
+    resources = [
+      "arn:aws:route53:::hostedzone/${data.aws_route53_zone.zone.id}"
+    ]
+  }
+
+  statement {
+    effect = "Allow"
+    actions = [
       "cloudfront:CreateInvalidation"
     ]
     resources = [

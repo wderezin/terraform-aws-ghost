@@ -35,8 +35,10 @@ locals {
   base_name = local.application
 
   //  ***** Network Settings
-  //  vpc_id     = var.infrastructure_info.vpc_id
-  subnet_ids = var.cluster_info.subnet_ids
+  vpc_id          = var.cluster_info.vpc_id
+  subnet_ids      = var.cluster_info.subnet_ids
+  security_groups = var.cluster_info.security_groups
+
 
   //  ***** DNS Settings
   enable_root_domain_count = var.enable_root_domain ? 1 : 0
