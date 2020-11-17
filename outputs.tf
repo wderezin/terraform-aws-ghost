@@ -7,6 +7,7 @@ output cluster_info {
     database_username = aws_rds_cluster.default.master_username
     database_password = aws_rds_cluster.default.master_password
     subnet_ids        = local.subnet_ids
+    security_groups   = local.security_group_is
   }
 }
 

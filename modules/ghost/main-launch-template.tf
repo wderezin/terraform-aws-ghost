@@ -1,6 +1,6 @@
 
 data aws_ami default {
-//  ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-20201026 (ami-0885b1f6bd170450c)
+  //  ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-20201026 (ami-0885b1f6bd170450c)
   most_recent = true
   name_regex  = "^ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"
   owners      = ["099720109477"]
@@ -26,6 +26,12 @@ resource aws_launch_template default {
 
   iam_instance_profile {
     name = aws_iam_instance_profile.ec2_profile.name
+  }
+
+  vpc_security_group_ids = local.security_groups
+  network_interfaces {
+    associate_public_ip_address = true
+    subnet_id = local.subnet_ids[0]
   }
 
   user_data = filebase64("${path.module}/install.sh")

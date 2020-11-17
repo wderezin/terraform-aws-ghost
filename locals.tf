@@ -27,9 +27,10 @@ locals {
 
   database_tags = merge(local.tags, { Function : "database" })
 
-  vpc_id      = var.network_info.vpc_id
-  cidr_blocks = var.network_info.cidr_blocks
-  subnet_ids  = var.network_info.subnet_ids
+  vpc_id            = var.network_info.vpc_id
+  cidr_blocks       = var.network_info.cidr_blocks
+  subnet_ids        = var.network_info.subnet_ids
+  security_group_is = concat(var.network_info.security_group_is, [aws_security_group.rds.id])
 
   password_change_id = var.password_change_id
 

@@ -22,6 +22,7 @@ variable cluster_info {
     database_host = string,
     database_port = string,
     subnet_ids : list(string)
-//    log_bucket_name : string
+    security_groups : list(string
+    //    log_bucket_name : string
   })
 }
