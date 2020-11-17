@@ -31,7 +31,7 @@ resource aws_launch_template default {
   vpc_security_group_ids = local.security_groups
   network_interfaces {
     associate_public_ip_address = true
-    subnet_id = local.subnet_ids[0]
+    subnet_id                   = local.subnet_ids[0]
   }
 
   user_data = filebase64("${path.module}/install.sh")

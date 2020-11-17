@@ -35,8 +35,8 @@ locals {
   base_name = local.application
 
   //  ***** Network Settings
-  vpc_id     = var.cluster_info.vpc_id
-  subnet_ids = var.cluster_info.subnet_ids
+  vpc_id          = var.cluster_info.vpc_id
+  subnet_ids      = var.cluster_info.subnet_ids
   security_groups = var.cluster_info.security_groups
 
 
