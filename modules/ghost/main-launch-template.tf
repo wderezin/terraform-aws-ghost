@@ -27,7 +27,7 @@ resource aws_launch_template default {
     name = aws_iam_instance_profile.ec2_profile.name
   }
 
-  user_data = filebase64("${path.module}/example.sh")
+  user_data = filebase64("${path.module}/install.sh")
 
   instance_initiated_shutdown_behavior = "terminate"
 
