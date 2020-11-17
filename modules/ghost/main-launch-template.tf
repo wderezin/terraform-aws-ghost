@@ -1,7 +1,8 @@
 
 data aws_ami default {
+//  ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-20201026 (ami-0885b1f6bd170450c)
   most_recent = true
-  name_regex  = "^ubuntu/images/hvm-ssd/ubuntu-bionic-20.04-amd64-server-*"
+  name_regex  = "^ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"
   owners      = ["099720109477"]
 
   filter {
