@@ -96,3 +96,12 @@ resource aws_ssm_parameter cms_bucket {
   value       = aws_s3_bucket.cms.bucket
   tags        = local.tags
 }
+
+
+resource aws_ssm_parameter zone_id {
+name        = "${local.parameter_prefix}zone_id"
+description = "the zone id for DNS"
+type        = "String"
+value       = data.aws_route53_zone.zone.id
+tags        = local.tags
+}
