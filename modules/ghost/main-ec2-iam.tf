@@ -32,7 +32,7 @@ data aws_iam_policy_document ec2_access_policy_document {
       "route53:ChangeResourceRecordSets"
     ]
     resources = [
-      "arn:aws:route53:::change/${data.aws_route53_zone.zone.id}"
+      "arn:aws:route53:::hostedzone/${data.aws_route53_zone.zone.id}"
     ]
   }
 
