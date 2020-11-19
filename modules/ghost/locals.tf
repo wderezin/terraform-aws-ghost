@@ -6,7 +6,7 @@ locals {
   application = var.application
   // ssm
   parameter_prefix = "/application/${local.application}/"
-  instance_size = var.instance_size
+  instance_size    = var.instance_size
 
   tags = merge(
     //    Default Tag Values
