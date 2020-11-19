@@ -25,13 +25,13 @@ resource aws_autoscaling_group ghost_server {
         version            = "$Latest"
       }
       override {
-        instance_type = "t3a.small"
+        instance_type = "t3a.${local.instance_size}"
       }
       override {
-        instance_type = "t3.small"
+        instance_type = "t3.${local.instance_size}"
       }
       override {
-        instance_type = "t2.small"
+        instance_type = "t2.${local.instance_size}"
       }
     }
   }
