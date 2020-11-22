@@ -11,10 +11,22 @@ variable web_hostname {
   description = "The public hostname such as www in www.acme.com"
 }
 
+variable web_dns_hostname {
+  type = string
+  default = null
+  description = "If using a different DNS server."
+}
+
 variable cms_hostname {
   type        = string
   default     = "ghost"
   description = "The ghost management server hostname such as cms in www.acme.com"
+}
+
+variable cms_dns_hostname {
+  type = string
+  default = null
+  description = "If using a different DNS server."
 }
 
 variable enable_root_domain {

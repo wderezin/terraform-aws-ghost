@@ -73,6 +73,14 @@ resource aws_ssm_parameter cms_hostname {
   tags        = local.tags
 }
 
+resource aws_ssm_parameter cms_dns_hostname {
+  name        = "${local.parameter_prefix}cms_dns_hostname"
+  description = "the http name of the website"
+  type        = "String"
+  value       = local.cms_dns_hostname
+  tags        = local.tags
+}
+
 resource aws_ssm_parameter cloudfront_id {
   name        = "${local.parameter_prefix}cloudfront_id"
   description = "The Cloudfront distribution id"

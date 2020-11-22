@@ -48,9 +48,12 @@ locals {
 
   inactive_seconds = var.inactive_seconds
 
-  dns_zone_name = var.dns_zone_name
   www_hostname  = var.web_hostname
   cms_hostname  = var.cms_hostname
+
+  dns_zone_name = var.dns_zone_name
+  www_dns_hostname = var.web_dns_hostname != null ? var.web_dns_hostname : var.web_hostname
+  cms_dns_hostname = var.cms_dns_hostname != null ? var.cms_dns_hostname : var.cms_hostname
   www_fqdn      = "${var.web_hostname}.${var.dns_zone_name}"
   cms_fqdn      = "${var.cms_hostname}.${var.dns_zone_name}"
 

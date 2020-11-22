@@ -86,7 +86,7 @@ resource aws_cloudfront_distribution www {
 
 resource aws_route53_record ghost {
   zone_id = data.aws_route53_zone.zone.zone_id
-  name    = local.www_hostname
+  name    = local.www_dns_hostname
   type    = "A"
 
   alias {
