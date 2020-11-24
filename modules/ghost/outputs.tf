@@ -112,3 +112,12 @@ resource aws_ssm_parameter zone_id {
   value       = data.aws_route53_zone.zone.id
   tags        = local.tags
 }
+
+resource aws_ssm_parameter ghost_api_key {
+  count = local.ghost_api_key != null ? 1 : 0
+  name        = "${local.parameter_prefix}ghost_api_key"
+  description = "the ghost api key for serverless ghostHunter"
+  type        = "SecureString"
+  value       = local.ghost_api_key
+  tags        = local.tags
+}

@@ -7,6 +7,7 @@ locals {
   // ssm
   parameter_prefix = "/application/${local.application}/"
   instance_size    = var.instance_size
+  ghost_api_key = var.ghost_api_key
 
   tags = merge(
     //    Default Tag Values

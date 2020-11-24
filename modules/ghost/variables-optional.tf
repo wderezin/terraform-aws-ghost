@@ -47,20 +47,8 @@ variable inactive_seconds {
   description = "Number of seconds until ghost CMS is considered inactive and stops"
 }
 
-//variable vpc_cluster_tag_search_override {
-//  type        = string
-//  default     = null
-//  description = "Override the VPC Cluster search tag from the tags"
-//}
-//
-//variable subnet_network_tag_search_override {
-//  type        = string
-//  default     = "public"
-//  description = "Subnet network search tag"
-//}
-//
-//variable rds_cluster_name_override {
-//  type    = string
-//  default = null
-//}
-//
+variable ghost_api_key {
+  type = string
+  default = null
+  description = "Ghost API Key to push serverless ghostHunt"
+}
