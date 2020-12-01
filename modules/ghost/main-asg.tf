@@ -36,12 +36,4 @@ resource aws_autoscaling_group ghost_server {
     }
   }
 
-  tags = [
-    {
-      key                 = "Name"
-      value               = local.base_name
-      propagate_at_launch = true
-    }
-  ]
-
 }

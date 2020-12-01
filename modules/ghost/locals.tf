@@ -24,11 +24,10 @@ locals {
 
   ec2_tags = merge({
     Application : var.application
-    backup : "default"
     },
     local.tags,
     {
-      Name : var.application
+      Name : local.base_name
       SSHUSER : "ubuntu",
       SSM_PREFIX : local.parameter_prefix
     }
