@@ -52,3 +52,15 @@ variable ghost_api_key {
   default = null
   description = "Ghost API Key to push serverless ghostHunt"
 }
+
+variable friendly_captcha_sitekey {
+  type = string
+  default = null
+  description = "Friendly Captcha Sitekey for auto start"
+}
+
+variable friendly_captcha_apikey {
+  type = string
+  default = null
+  description = "Friendly Captcha API key for verification"
+}

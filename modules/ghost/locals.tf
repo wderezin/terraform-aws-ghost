@@ -75,4 +75,7 @@ locals {
 
   use_default_request_lambda = var.viewer_request_lambda_arn == null
   viewer_request_lambda_arn  = local.use_default_request_lambda ? [module.default-cloudfront-s3-viewer-request-lambda[0].qualified_arn] : [var.viewer_request_lambda_arn]
+
+  friendly_captcha_sitekey = var.friendly_captcha_sitekey
+  friendly_captcha_apikey = var.friendly_captcha_apikey
 }

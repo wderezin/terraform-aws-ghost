@@ -121,3 +121,21 @@ resource aws_ssm_parameter ghost_api_key {
   value       = local.ghost_api_key
   tags        = local.tags
 }
+
+resource aws_ssm_parameter captcha_sitekey {
+  count = local.friendly_captcha_sitekey != null ? 1 : 0
+  name        = "${local.parameter_prefix}friendly_captcha_sitekey"
+  description = "the friendly captcha sitekey"
+  type        = "String"
+  value       = local.friendly_captcha_sitekey
+  tags        = local.tags
+}
+
+resource aws_ssm_parameter captcha_apikey {
+  count = local.friendly_captcha_apikey != null ? 1 : 0
+  name        = "${local.parameter_prefix}friendly_captcha_apikey"
+  description = "the friendly captcha apikey"
+  type        = "SecureString"
+  value       = local.friendly_captcha_apikey
+  tags        = local.tags
+}
