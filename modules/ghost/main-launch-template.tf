@@ -153,6 +153,17 @@ data aws_iam_policy_document ec2_access_policy_document {
   statement {
     effect = "Allow"
     actions = [
+      "rds:DescribeDBClusters",
+      "rds:ModifyCurrentDBClusterCapacity"
+    ]
+    resources = [
+      var.cluster_info.database_arn
+    ]
+  }
+
+  statement {
+    effect = "Allow"
+    actions = [
       "ec2:DescribeTags"
     ]
     resources = [

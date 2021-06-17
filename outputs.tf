@@ -1,6 +1,7 @@
 
 output cluster_info {
   value = {
+    database_arn      = aws_rds_cluster.default.arn
     database_host     = aws_rds_cluster.default.endpoint
     database_port     = aws_rds_cluster.default.port
     database_name     = aws_rds_cluster.default.database_name
