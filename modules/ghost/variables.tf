@@ -19,6 +19,7 @@ variable application {
 
 variable cluster_info {
   type = object({
+    database_arn  = string,
     database_host = string,
     database_port = string,
     vpc_id        = string,

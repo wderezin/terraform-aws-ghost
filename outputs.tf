@@ -1,29 +1,13 @@
 
-output cluster_info {
-  value = {
-    database_arn      = aws_rds_cluster.default.arn
-    database_host     = aws_rds_cluster.default.endpoint
-    database_port     = aws_rds_cluster.default.port
-    database_name     = aws_rds_cluster.default.database_name
-    database_username = aws_rds_cluster.default.master_username
-    database_password = aws_rds_cluster.default.master_password
-    vpc_id            = local.vpc_id
-    subnet_ids        = local.subnet_ids
-    security_groups   = local.security_group_ids
-  }
+output cluster {
+  value = aws_rds_cluster.default
 }
 
-output database_info {
-  value = {
-    host     = aws_rds_cluster.default.endpoint
-    port     = aws_rds_cluster.default.port
-    name     = aws_rds_cluster.default.database_name
-    username = aws_rds_cluster.default.master_username
-    password = aws_rds_cluster.default.master_password
-  }
+output database_arn {
+  value = aws_rds_cluster.default.arn
 }
 
-output database_endpoint {
+output database_host {
   value = aws_rds_cluster.default.endpoint
 }
 
@@ -42,4 +26,20 @@ output database_username {
 output database_password {
   sensitive = true
   value     = aws_rds_cluster.default.master_password
+}
+
+output vpc_id {
+  value = local.vpc_id
+}
+
+output subnet_ids {
+  value = local.subnet_ids
+}
+
+output security_groups {
+  value = local.security_group_ids
+}
+
+output database_endpoint {
+  value = aws_rds_cluster.default.endpoint
 }

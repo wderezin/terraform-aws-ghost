@@ -7,7 +7,7 @@ resource aws_db_subnet_group default {
 }
 
 resource random_password adminpassword {
-  for_each = toset(list(local.password_change_id))
+  for_each = toset([local.password_change_id])
   length   = 32
   special  = false
 }
@@ -82,4 +82,3 @@ resource aws_security_group rds {
     cidr_blocks = local.cidr_blocks
   }
 }
-
