@@ -44,17 +44,17 @@ resource aws_cloudfront_distribution www {
     response_page_path = "/404/index.html"
   }
 
-  origin_group {
-    origin_id = "webId"
-
-    failover_criteria {
-      status_codes = [403, 404, 500, 502]
-    }
-
-    member {
-      origin_id = local.static_origin_id
-    }
-  }
+//  origin_group {
+//    origin_id = "webId"
+//
+//    failover_criteria {
+//      status_codes = [403, 404, 500, 502]
+//    }
+//
+//    member {
+//      origin_id = local.static_origin_id
+//    }
+//  }
 
 //  origin {
 //    domain_name = aws_s3_bucket.web.bucket_regional_domain_name
@@ -77,6 +77,7 @@ resource aws_cloudfront_distribution www {
     allowed_methods  = ["GET", "HEAD", "OPTIONS"]
     cached_methods   = ["HEAD", "GET"]
     target_origin_id = local.static_origin_id
+//    target_origin_id = local.static_origin_id
 
     forwarded_values {
       query_string = false
