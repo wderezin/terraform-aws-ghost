@@ -37,12 +37,13 @@ resource aws_launch_template default {
   name     = local.base_name
   image_id = data.aws_ami.default.id
 
-  //  instance_market_options {
-  //    market_type = "spot"
-  ////    spot_options {
-  ////      spot_instance_type = one-time
-  ////    }
-  //  }
+//  instance_market_options {
+//    market_type = "spot"
+//    spot_options {
+//      spot_instance_type = persistent
+//      instance_interruption_behavior = "stop"
+//    }
+//  }
 
   instance_type = "t3a.micro"
 
@@ -105,7 +106,11 @@ data aws_iam_policy_document ec2_access_policy_document {
   statement {
     effect = "Allow"
     actions = [
-      "route53:ChangeResourceRecordSets"
+//      Update IP Address and TLS (acme.sh)
+      "route53:ChangeResourceRecordSets",
+//      Needed by (acme.sh)
+      "route53:GetHostedZone",
+      "route53:ListResourceRecordSets"
     ]
     resources = [
       "arn:aws:route53:::hostedzone/${data.aws_route53_zone.zone.id}"
