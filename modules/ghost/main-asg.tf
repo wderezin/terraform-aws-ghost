@@ -5,8 +5,6 @@ resource aws_spot_instance_request cms_server {
   version = "$Latest"
   ami = ""
   instance_type = ""
-
-  instance_interruption_behavior = "stop"
 }
 
 
