@@ -42,7 +42,7 @@ resource aws_cloudfront_distribution www {
   dynamic "origin_group" {
     for_each = [local.enable_failover]
     content {
-      origin_id = "webId"
+      origin_id = local.failover_origin_id
 
       failover_criteria {
         status_codes = [
