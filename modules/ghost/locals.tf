@@ -68,7 +68,7 @@ locals {
 
   server_origin_id = "ghostServerOrigin"
   static_origin_id = "ghostStaticOrigin"
-  origin_id = var.cdn_mode == var.cdn_mode == "live" ? local.server_origin_id : local.static_origin_id
+  origin_id = var.cdn_mode == "live" ? local.server_origin_id : local.static_origin_id
 
   acm_cert_arn = var.acm_cert_arn
 
