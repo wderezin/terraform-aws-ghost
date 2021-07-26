@@ -64,14 +64,18 @@ resource aws_cloudfront_distribution www {
 //
 //  }
 
-  origin {
-    domain_name = aws_s3_bucket.web.bucket_regional_domain_name
-    origin_id   = local.static_origin_id
+  dynamic "origin" {
+    for_each = [local.enable_static]
+    content {
+      domain_name = aws_s3_bucket.web.bucket_regional_domain_name
+      origin_id   = local.static_origin_id
 
-    s3_origin_config {
-      origin_access_identity = aws_cloudfront_origin_access_identity.default.cloudfront_access_identity_path
+      s3_origin_config {
+        origin_access_identity = aws_cloudfront_origin_access_identity.default.cloudfront_access_identity_path
+      }
     }
   }
+
 
   default_cache_behavior {
     allowed_methods  = ["GET", "HEAD", "OPTIONS"]

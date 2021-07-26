@@ -61,6 +61,11 @@ locals {
   instance_profile_name = local.cms_fqdn
 
   //  ***** CLOUDFRONT main-cloudfront-s3.tf
+  cdn_mode = var.cdn_mode
+  enable_static = contains(["local", "failover"], var.cdn_mode)
+  enable_live = contains(["live", "failover"], var.cdn_mode)
+  enable_failover = contains(["failover"], var.cdn_mode)
+  
   acm_cert_arn = var.acm_cert_arn
 
   database_name     = "ghost_${local.base_name}"
