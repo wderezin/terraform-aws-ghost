@@ -8,11 +8,6 @@ resource aws_cloudfront_origin_access_identity default {
   comment = "Ghost S3 web bucket for ${local.application}"
 }
 
-locals {
-  server_origin_id = "ghostServerOrigin"
-  static_origin_id = "ghostStaticOrigin"
-}
-
 resource aws_cloudfront_distribution www {
   enabled = true
   comment = local.base_name
@@ -80,8 +75,8 @@ resource aws_cloudfront_distribution www {
   default_cache_behavior {
     allowed_methods  = ["GET", "HEAD", "OPTIONS"]
     cached_methods   = ["HEAD", "GET"]
-    target_origin_id = local.static_origin_id
 //    target_origin_id = local.static_origin_id
+    target_origin_id = local.origin_id
 
     forwarded_values {
       query_string = false
