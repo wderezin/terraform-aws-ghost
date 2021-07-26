@@ -39,25 +39,37 @@ resource aws_cloudfront_distribution www {
     response_page_path = "/404/index.html"
   }
 
-//  origin_group {
-//    origin_id = "webId"
-//
-//    failover_criteria {
-//      status_codes = [403, 404, 500, 502]
-//    }
-//
-//    member {
-//      origin_id = local.static_origin_id
-//    }
-//  }
+  dynamic "origin_group" {
+    for_each = [local.enable_failover]
+    content {
+      origin_id = "webId"
 
-//  origin {
-//    domain_name = aws_s3_bucket.web.bucket_regional_domain_name
-//    origin_id   = local.server_origin_id
-//
-//    // TODO for server
-//
-//  }
+      failover_criteria {
+        status_codes = [
+          403,
+          404,
+          500,
+          502]
+      }
+
+      member {
+        origin_id = local.enable_live
+      }
+
+      member {
+        origin_id = local.static_origin_id
+      }
+    }
+  }
+
+  dynamic "origin" {
+    for_each = [local.enable_live]
+    content {
+      origin_id = local.server_origin_id
+      domain_name = aws_route53_record.cms.fqdn
+    }
+  }
+
 
   dynamic "origin" {
     for_each = [local.enable_static]
