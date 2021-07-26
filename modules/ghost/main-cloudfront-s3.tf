@@ -75,6 +75,16 @@ resource aws_cloudfront_distribution www {
         origin_ssl_protocols = ["TLSv1.1", "TLSv1.2"]
       }
 
+      custom_header {
+        name = "X-Forwarded-Host"
+        value = aws_route53_record.ghost.fqdn
+      }
+
+      custom_header {
+        name = "X-Forwarded-Proto"
+        value = "https"
+      }
+
       connection_attempts = 2
       connection_timeout = 3 // wait in seconds
     }
