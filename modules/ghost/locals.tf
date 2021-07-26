@@ -65,12 +65,10 @@ locals {
 
   enable_static = contains(["local", "failover"], var.cdn_mode) ? ["enabled"] : []
   enable_live = contains(["live", "failover"], var.cdn_mode) ? ["enabled"] : []
-  enable_failover = contains(["failover"], var.cdn_mode) ? ["enabled"] : []
 
-  failover_origin_id = "ghostFailoverOrigin"
   server_origin_id = "ghostServerOrigin"
   static_origin_id = "ghostStaticOrigin"
-  origin_id = var.cdn_mode == "failover" ? local.failover_origin_id : var.cdn_mode == "live" ? local.server_origin_id : local.static_origin_id
+  origin_id = var.cdn_mode == var.cdn_mode == "live" ? local.server_origin_id : local.static_origin_id
 
   acm_cert_arn = var.acm_cert_arn
 

@@ -39,28 +39,28 @@ resource aws_cloudfront_distribution www {
     response_page_path = "/404/index.html"
   }
 
-  dynamic "origin_group" {
-    for_each = local.enable_failover
-    content {
-      origin_id = local.failover_origin_id
-
-      failover_criteria {
-        status_codes = [
-          403,
-          404,
-          500,
-          502]
-      }
-
-      member {
-        origin_id = local.server_origin_id
-      }
-
-      member {
-        origin_id = local.static_origin_id
-      }
-    }
-  }
+//  dynamic "origin_group" {
+//    for_each = local.enable_failover
+//    content {
+//      origin_id = local.failover_origin_id
+//
+//      failover_criteria {
+//        status_codes = [
+//          403,
+//          404,
+//          500,
+//          502]
+//      }
+//
+//      member {
+//        origin_id = local.server_origin_id
+//      }
+//
+//      member {
+//        origin_id = local.static_origin_id
+//      }
+//    }
+//  }
 
   dynamic "origin" {
     for_each = local.enable_live
@@ -97,7 +97,6 @@ resource aws_cloudfront_distribution www {
   default_cache_behavior {
     allowed_methods  = ["GET", "HEAD", "OPTIONS"]
     cached_methods   = ["HEAD", "GET"]
-//    target_origin_id = local.static_origin_id
     target_origin_id = local.origin_id
 
     forwarded_values {

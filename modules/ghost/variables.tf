@@ -19,10 +19,10 @@ variable application {
 
 variable cdn_mode {
   type = string
-  description = "Does the CDN use live, static, or failover."
+  description = "Does the CDN use live or static."
   validation {
-    condition = contains(["live", "static", "failover"], var.cdn_mode)
-    error_message = "Valid options are live, static, failover."
+    condition = contains(["live", "static"], var.cdn_mode)
+    error_message = "Valid options are live or static."
   }
 }
 
