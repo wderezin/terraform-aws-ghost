@@ -53,7 +53,7 @@ resource aws_cloudfront_distribution www {
       }
 
       member {
-        origin_id = local.enable_live
+        origin_id = local.server_origin_id
       }
 
       member {
