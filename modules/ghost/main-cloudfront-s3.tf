@@ -77,7 +77,7 @@ resource aws_cloudfront_distribution www {
 
       custom_header {
         name = "X-Forwarded-Host"
-        value = aws_route53_record.ghost.fqdn
+        value = local.www_fqdn
       }
 
       custom_header {
