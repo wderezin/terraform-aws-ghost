@@ -68,7 +68,7 @@ resource aws_cloudfront_distribution www {
       origin_id = local.server_origin_id
       domain_name = aws_route53_record.cms.fqdn
 
-      custome_origin_config {
+      custom_origin_config {
         http_port = 80
         https_port = 443
         origin_protocol_policy = https-only
