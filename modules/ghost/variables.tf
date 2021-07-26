@@ -22,7 +22,7 @@ variable cdn_mode {
   description = "Does the CDN use live, static, or failover."
   validation {
     condition = contains(["live", "static", "failover"], var.cdn_mode)
-    error_message = "Valid options are live, static, failover"
+    error_message = "Valid options are live, static, failover."
   }
 }
 
