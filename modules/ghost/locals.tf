@@ -63,9 +63,9 @@ locals {
   //  ***** CLOUDFRONT main-cloudfront-s3.tf
   cdn_mode = var.cdn_mode
 
-  enable_static = contains(["local", "failover"], var.cdn_mode)
-  enable_live = contains(["live", "failover"], var.cdn_mode)
-  enable_failover = contains(["failover"], var.cdn_mode)
+  enable_static = contains(["local", "failover"], var.cdn_mode) ? ["enabled"] : []
+  enable_live = contains(["live", "failover"], var.cdn_mode) ? ["enabled"] : []
+  enable_failover = contains(["failover"], var.cdn_mode) ? ["enabled"] : []
 
   failover_origin_id = "ghostFailoverOrigin"
   server_origin_id = "ghostServerOrigin"

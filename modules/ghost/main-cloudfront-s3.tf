@@ -40,7 +40,7 @@ resource aws_cloudfront_distribution www {
   }
 
   dynamic "origin_group" {
-    for_each = [local.enable_failover]
+    for_each = local.enable_failover
     content {
       origin_id = local.failover_origin_id
 
@@ -63,7 +63,7 @@ resource aws_cloudfront_distribution www {
   }
 
   dynamic "origin" {
-    for_each = [local.enable_live]
+    for_each = local.enable_live
     content {
       origin_id = local.server_origin_id
       domain_name = aws_route53_record.cms.fqdn
@@ -82,7 +82,7 @@ resource aws_cloudfront_distribution www {
 
 
   dynamic "origin" {
-    for_each = [local.enable_static]
+    for_each = local.enable_static
     content {
       domain_name = aws_s3_bucket.web.bucket_regional_domain_name
       origin_id   = local.static_origin_id
