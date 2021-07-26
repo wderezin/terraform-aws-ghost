@@ -89,6 +89,48 @@ resource aws_cloudfront_distribution www {
       connection_timeout = 3 // wait in seconds
     }
   }
+  dynamic "default_cache_behavior" {
+    for_each = local.enable_live
+    content {
+      allowed_methods = [
+        "GET",
+        "HEAD",
+        "OPTIONS",
+        "PUT",
+        "POST",
+        "PATCH",
+        "DELETE"]
+      cached_methods = [
+        "HEAD",
+        "GET"]
+      target_origin_id = local.origin_id
+
+      forwarded_values {
+        query_string = true
+        headers = ["Origin", "Referer", "User-Agent"]
+
+        cookies {
+          forward = "all"
+        }
+      }
+
+      dynamic lambda_function_association {
+        for_each = local.viewer_request_lambda_arn
+        content {
+          event_type = "viewer-request"
+          lambda_arn = lambda_function_association.value
+          include_body = false
+        }
+      }
+
+      //    3600 1 hour 86400 is 1 day and
+      min_ttl = 0
+      default_ttl = 86400
+      max_ttl = 31536000
+      compress = false
+      viewer_protocol_policy = "redirect-to-https"
+    }
+  }
 
 
   dynamic "origin" {
@@ -103,35 +145,42 @@ resource aws_cloudfront_distribution www {
     }
   }
 
+  dynamic "default_cache_behavior" {
+    for_each = local.enable_static
+    content {
+      allowed_methods = [
+        "GET",
+        "HEAD",
+        "OPTIONS"]
+      cached_methods = [
+        "HEAD",
+        "GET"]
+      target_origin_id = local.origin_id
 
-  default_cache_behavior {
-    allowed_methods  = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
-    cached_methods   = ["HEAD", "GET"]
-    target_origin_id = local.origin_id
+      forwarded_values {
+        query_string = false
 
-    forwarded_values {
-      query_string = true
-
-      cookies {
-        forward = "all"
+        cookies {
+          forward = "none"
+        }
       }
-    }
 
-    dynamic lambda_function_association {
-      for_each = local.viewer_request_lambda_arn
-      content {
-        event_type   = "viewer-request"
-        lambda_arn   = lambda_function_association.value
-        include_body = false
+      dynamic lambda_function_association {
+        for_each = local.viewer_request_lambda_arn
+        content {
+          event_type = "viewer-request"
+          lambda_arn = lambda_function_association.value
+          include_body = false
+        }
       }
-    }
 
-    //    3600 1 hour 86400 is 1 day and
-    min_ttl                = 3600
-    default_ttl            = 86400
-    max_ttl                = 31536000
-    compress               = true
-    viewer_protocol_policy = "redirect-to-https"
+      //    3600 1 hour 86400 is 1 day and
+      min_ttl = 3600
+      default_ttl = 86400
+      max_ttl = 31536000
+      compress = true
+      viewer_protocol_policy = "redirect-to-https"
+    }
   }
 
 }
