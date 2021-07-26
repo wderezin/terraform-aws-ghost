@@ -95,15 +95,15 @@ resource aws_cloudfront_distribution www {
 
 
   default_cache_behavior {
-    allowed_methods  = ["GET", "HEAD", "OPTIONS"]
+    allowed_methods  = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
     cached_methods   = ["HEAD", "GET"]
     target_origin_id = local.origin_id
 
     forwarded_values {
-      query_string = false
+      query_string = true
 
       cookies {
-        forward = "none"
+        forward = "all"
       }
     }
 
