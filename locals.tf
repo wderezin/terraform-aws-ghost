@@ -1,6 +1,6 @@
 
-data aws_region default {}
-data aws_availability_zones default {}
+data "aws_region" "default" {}
+data "aws_availability_zones" "default" {}
 
 locals {
   //  Make sure these are set

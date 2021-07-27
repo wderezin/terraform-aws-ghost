@@ -8,7 +8,7 @@
 //}
 
 
-resource aws_autoscaling_group ghost_server {
+resource "aws_autoscaling_group" "ghost_server" {
   name             = local.application
   min_size         = 1
   max_size         = 1

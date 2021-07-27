@@ -1,9 +1,9 @@
 
-variable tags {
+variable "tags" {
   type = map(string)
 }
 
-variable network_info {
+variable "network_info" {
   type = object({
     vpc_id             = string
     cidr_blocks        = list(string)
@@ -12,7 +12,7 @@ variable network_info {
   })
 }
 
-variable cluster {
+variable "cluster" {
   type        = string
   description = "Cluster name"
 }
