@@ -67,7 +67,7 @@ locals {
   enable_live   = contains(["live"], var.cdn_mode) ? ["enabled"] : []
 
   server_origin_id     = "ghostServerOrigin"
-  server_api_origin_id = "ghostServerGhostPathOrigin"
+  server_api_origin_id = "ghostServerAPIOrigin"
   static_origin_id     = "ghostStaticOrigin"
   origin_id            = var.cdn_mode == "live" ? local.server_origin_id : local.static_origin_id
 
