@@ -26,18 +26,19 @@ resource aws_cloudfront_distribution www {
     }
   }
 
-  //  permission denied from s3
-  custom_error_response {
-    error_code         = 403
-    response_code      = 404
-    response_page_path = "/404/index.html"
-  }
-
-  custom_error_response {
-    error_code         = 404
-    response_code      = 404
-    response_page_path = "/404/index.html"
-  }
+//  TOOD Update to work with Live mode
+//  //  permission denied from s3
+//  custom_error_response {
+//    error_code         = 403
+//    response_code      = 404
+//    response_page_path = "/404/index.html"
+//  }
+//
+//  custom_error_response {
+//    error_code         = 404
+//    response_code      = 404
+//    response_page_path = "/404/index.html"
+//  }
 
 //  dynamic "origin_group" {
 //    for_each = local.enable_failover
