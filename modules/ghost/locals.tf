@@ -63,8 +63,11 @@ locals {
   //  ***** CLOUDFRONT main-cloudfront-s3.tf
   cdn_mode = var.cdn_mode
 
-  enable_static = contains(["local"], var.cdn_mode) ? ["enabled"] : []
-  enable_live   = contains(["live"], var.cdn_mode) ? ["enabled"] : []
+  is_static = contains(["local"], var.cdn_mode)
+  is_live   = contains(["live"], var.cdn_mode)
+
+  enable_static = local.is_static ? ["enabled"] : []
+  enable_live   = local.is_live ? ["enabled"] : []
 
   server_origin_id     = "ghostServerOrigin"
   server_api_origin_id = "ghostServerAPIOrigin"

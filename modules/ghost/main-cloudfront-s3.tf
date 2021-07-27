@@ -22,7 +22,8 @@ resource "aws_cloudfront_distribution" "www" {
 
   restrictions {
     geo_restriction {
-      restriction_type = "none"
+      restriction_type = "blacklist"
+      locations        = ["CN"]
     }
   }
 
@@ -125,10 +126,12 @@ resource "aws_cloudfront_distribution" "www" {
       "PUT",
       "POST",
       "PATCH",
-    "DELETE"]
+      "DELETE"
+    ]
     cached_methods = [
       "HEAD",
-    "GET"]
+      "GET"
+    ]
     target_origin_id = local.server_api_origin_id
 
     forwarded_values {
@@ -157,7 +160,8 @@ resource "aws_cloudfront_distribution" "www" {
       ]
       cached_methods = [
         "HEAD",
-      "GET"]
+        "GET"
+      ]
       target_origin_id = local.origin_id
 
       forwarded_values {
@@ -205,10 +209,12 @@ resource "aws_cloudfront_distribution" "www" {
       allowed_methods = [
         "GET",
         "HEAD",
-      "OPTIONS"]
+        "OPTIONS"
+      ]
       cached_methods = [
         "HEAD",
-      "GET"]
+        "GET"
+      ]
       target_origin_id = local.origin_id
 
       forwarded_values {
