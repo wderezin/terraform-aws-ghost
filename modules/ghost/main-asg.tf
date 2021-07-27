@@ -1,4 +1,13 @@
 
+//resource aws_spot_instance_request cms_server {
+//  launch_tempalte { id = aws_launch_template.default.id }
+//
+//  version = "$Latest"
+//  ami = ""
+//  instance_type = ""
+//}
+
+
 resource aws_autoscaling_group ghost_server {
   name             = local.application
   min_size         = 1

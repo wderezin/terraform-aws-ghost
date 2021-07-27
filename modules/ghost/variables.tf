@@ -17,6 +17,15 @@ variable application {
   description = "Application Id Name"
 }
 
+variable cdn_mode {
+  type = string
+  description = "Does the CDN use live or static."
+  validation {
+    condition = contains(["live", "static"], var.cdn_mode)
+    error_message = "Valid options are live or static."
+  }
+}
+
 variable cluster_info {
   type = object({
     database_arn  = string,

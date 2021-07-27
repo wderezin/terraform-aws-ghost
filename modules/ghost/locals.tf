@@ -61,6 +61,15 @@ locals {
   instance_profile_name = local.cms_fqdn
 
   //  ***** CLOUDFRONT main-cloudfront-s3.tf
+  cdn_mode = var.cdn_mode
+
+  enable_static = contains(["local"], var.cdn_mode) ? ["enabled"] : []
+  enable_live = contains(["live"], var.cdn_mode) ? ["enabled"] : []
+
+  server_origin_id = "ghostServerOrigin"
+  static_origin_id = "ghostStaticOrigin"
+  origin_id = var.cdn_mode == "live" ? local.server_origin_id : local.static_origin_id
+
   acm_cert_arn = var.acm_cert_arn
 
   database_name     = "ghost_${local.base_name}"
