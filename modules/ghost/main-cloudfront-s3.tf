@@ -63,33 +63,60 @@ resource aws_cloudfront_distribution www {
 //    }
 //  }
 
-  dynamic "origin" {
-    for_each = local.enable_live
-    content {
-      origin_id = local.server_origin_id
-      domain_name = aws_route53_record.cms.fqdn
+  // We always have the live server configured for ghost
+  origin {
+    origin_id = local.server_origin_id
+    domain_name = aws_route53_record.cms.fqdn
 
-      custom_origin_config {
-        http_port = 80
-        https_port = 443
-        origin_protocol_policy = "https-only"
-        origin_ssl_protocols = ["TLSv1.1", "TLSv1.2"]
-      }
-
-      custom_header {
-        name = "X-Forwarded-Host"
-        value = local.www_fqdn
-      }
-
-      custom_header {
-        name = "X-Forwarded-Proto"
-        value = "https"
-      }
-
-      connection_attempts = 2
-      connection_timeout = 3 // wait in seconds
+    custom_origin_config {
+      http_port = 80
+      https_port = 443
+      origin_protocol_policy = "https-only"
+      origin_ssl_protocols = ["TLSv1.1", "TLSv1.2"]
     }
+
+    custom_header {
+      name = "X-Forwarded-Host"
+      value = local.www_fqdn
+    }
+
+    custom_header {
+      name = "X-Forwarded-Proto"
+      value = "https"
+    }
+
+    connection_attempts = 2
+    connection_timeout = 3 // wait in seconds
   }
+
+  ordered_cache_behavior {
+    path_pattern = "/ghost/*"
+    allowed_methods = [
+      "GET",
+      "HEAD",
+      "OPTIONS",
+      "PUT",
+      "POST",
+      "PATCH",
+      "DELETE"]
+    target_origin_id = local.server_origin_id
+
+    forwarded_values {
+      query_string = true
+      headers = ["Origin", "Referer", "User-Agent"]
+
+      cookies {
+        forward = "all"
+      }
+    }
+
+    min_ttl = 0
+    default_ttl = 0
+    max_ttl = 0
+    compress = false
+    viewer_protocol_policy = "redirect-to-https"
+  }
+
   dynamic "default_cache_behavior" {
     for_each = local.enable_live
     content {
@@ -132,7 +159,6 @@ resource aws_cloudfront_distribution www {
       viewer_protocol_policy = "redirect-to-https"
     }
   }
-
 
   dynamic "origin" {
     for_each = local.enable_static
