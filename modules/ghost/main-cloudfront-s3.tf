@@ -124,11 +124,8 @@ resource aws_cloudfront_distribution www {
       allowed_methods = [
         "GET",
         "HEAD",
-        "OPTIONS",
-        "PUT",
-        "POST",
-        "PATCH",
-        "DELETE"]
+        "OPTIONS"
+      ]
       cached_methods = [
         "HEAD",
         "GET"]
