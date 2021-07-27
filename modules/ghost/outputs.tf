@@ -1,5 +1,5 @@
 
-resource aws_ssm_parameter database_host {
+resource "aws_ssm_parameter" "database_host" {
   name        = "${local.parameter_prefix}database_host"
   description = "Database Host"
   type        = "String"
@@ -7,7 +7,7 @@ resource aws_ssm_parameter database_host {
   tags        = local.tags
 }
 
-resource aws_ssm_parameter database_port {
+resource "aws_ssm_parameter" "database_port" {
   name        = "${local.parameter_prefix}database_port"
   description = "Database Port"
   type        = "String"
@@ -15,7 +15,7 @@ resource aws_ssm_parameter database_port {
   tags        = local.tags
 }
 
-resource aws_ssm_parameter database_name {
+resource "aws_ssm_parameter" "database_name" {
   name        = "${local.parameter_prefix}database_name"
   description = "Ghost Database Name"
   type        = "String"
@@ -23,7 +23,7 @@ resource aws_ssm_parameter database_name {
   tags        = local.tags
 }
 
-resource aws_ssm_parameter database_user {
+resource "aws_ssm_parameter" "database_user" {
   name        = "${local.parameter_prefix}database_user"
   description = "Ghost Database User"
   type        = "String"
@@ -31,7 +31,7 @@ resource aws_ssm_parameter database_user {
   tags        = local.tags
 }
 
-resource aws_ssm_parameter database_password {
+resource "aws_ssm_parameter" "database_password" {
   name        = "${local.parameter_prefix}database_password"
   description = "Ghost Database User Password"
   type        = "SecureString"
@@ -39,7 +39,7 @@ resource aws_ssm_parameter database_password {
   tags        = local.tags
 }
 
-resource aws_ssm_parameter smtp_user {
+resource "aws_ssm_parameter" "smtp_user" {
   count       = local.smtp_user != null ? 1 : 0
   name        = "${local.parameter_prefix}smtp_user"
   description = "Ghost SMTP User"
@@ -48,7 +48,7 @@ resource aws_ssm_parameter smtp_user {
   tags        = local.tags
 }
 
-resource aws_ssm_parameter smpt_password {
+resource "aws_ssm_parameter" "smpt_password" {
   count       = local.smtp_password != null ? 1 : 0
   name        = "${local.parameter_prefix}smtp_password"
   description = "Ghost SMTP User Password"
@@ -57,7 +57,7 @@ resource aws_ssm_parameter smpt_password {
   tags        = local.tags
 }
 
-resource aws_ssm_parameter web_hostname {
+resource "aws_ssm_parameter" "web_hostname" {
   name        = "${local.parameter_prefix}web_hostname"
   description = "the http name of the website"
   type        = "String"
@@ -65,7 +65,7 @@ resource aws_ssm_parameter web_hostname {
   tags        = local.tags
 }
 
-resource aws_ssm_parameter cms_hostname {
+resource "aws_ssm_parameter" "cms_hostname" {
   name        = "${local.parameter_prefix}cms_hostname"
   description = "the http name of the website"
   type        = "String"
@@ -73,7 +73,7 @@ resource aws_ssm_parameter cms_hostname {
   tags        = local.tags
 }
 
-resource aws_ssm_parameter cloudfront_id {
+resource "aws_ssm_parameter" "cloudfront_id" {
   name        = "${local.parameter_prefix}cloudfront_id"
   description = "The Cloudfront distribution id"
   type        = "String"
@@ -81,7 +81,7 @@ resource aws_ssm_parameter cloudfront_id {
   tags        = local.tags
 }
 
-resource aws_ssm_parameter web_bucket {
+resource "aws_ssm_parameter" "web_bucket" {
   name        = "${local.parameter_prefix}web_bucket"
   description = "the S3 bucket for the static website"
   type        = "String"
@@ -89,7 +89,7 @@ resource aws_ssm_parameter web_bucket {
   tags        = local.tags
 }
 
-resource aws_ssm_parameter cms_bucket {
+resource "aws_ssm_parameter" "cms_bucket" {
   name        = "${local.parameter_prefix}cms_bucket"
   description = "the S3 bucket for CMS backups"
   type        = "String"
@@ -97,7 +97,7 @@ resource aws_ssm_parameter cms_bucket {
   tags        = local.tags
 }
 
-resource aws_ssm_parameter inactive_seconds {
+resource "aws_ssm_parameter" "inactive_seconds" {
   name        = "${local.parameter_prefix}inactive_seconds"
   description = "Number of seconds until CMS is considered inactive before stopping"
   type        = "String"
@@ -105,7 +105,7 @@ resource aws_ssm_parameter inactive_seconds {
   tags        = local.tags
 }
 
-resource aws_ssm_parameter zone_id {
+resource "aws_ssm_parameter" "zone_id" {
   name        = "${local.parameter_prefix}zone_id"
   description = "the zone id for DNS"
   type        = "String"
@@ -113,8 +113,8 @@ resource aws_ssm_parameter zone_id {
   tags        = local.tags
 }
 
-resource aws_ssm_parameter ghost_api_key {
-  count = local.ghost_api_key != null ? 1 : 0
+resource "aws_ssm_parameter" "ghost_api_key" {
+  count       = local.ghost_api_key != null ? 1 : 0
   name        = "${local.parameter_prefix}ghost_api_key"
   description = "the ghost api key for serverless ghostHunter"
   type        = "SecureString"
@@ -122,8 +122,8 @@ resource aws_ssm_parameter ghost_api_key {
   tags        = local.tags
 }
 
-resource aws_ssm_parameter captcha_sitekey {
-  count = local.friendly_captcha_sitekey != null ? 1 : 0
+resource "aws_ssm_parameter" "captcha_sitekey" {
+  count       = local.friendly_captcha_sitekey != null ? 1 : 0
   name        = "${local.parameter_prefix}friendly_captcha_sitekey"
   description = "the friendly captcha sitekey"
   type        = "String"
@@ -131,8 +131,8 @@ resource aws_ssm_parameter captcha_sitekey {
   tags        = local.tags
 }
 
-resource aws_ssm_parameter captcha_apikey {
-  count = local.friendly_captcha_apikey != null ? 1 : 0
+resource "aws_ssm_parameter" "captcha_apikey" {
+  count       = local.friendly_captcha_apikey != null ? 1 : 0
   name        = "${local.parameter_prefix}friendly_captcha_apikey"
   description = "the friendly captcha apikey"
   type        = "SecureString"

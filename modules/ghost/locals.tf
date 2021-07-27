@@ -7,7 +7,7 @@ locals {
   // ssm
   parameter_prefix = "/application/${local.application}/"
   instance_size    = var.instance_size
-  ghost_api_key = var.ghost_api_key
+  ghost_api_key    = var.ghost_api_key
 
   tags = merge(
     //    Default Tag Values
@@ -64,11 +64,12 @@ locals {
   cdn_mode = var.cdn_mode
 
   enable_static = contains(["local"], var.cdn_mode) ? ["enabled"] : []
-  enable_live = contains(["live"], var.cdn_mode) ? ["enabled"] : []
+  enable_live   = contains(["live"], var.cdn_mode) ? ["enabled"] : []
 
-  server_origin_id = "ghostServerOrigin"
-  static_origin_id = "ghostStaticOrigin"
-  origin_id = var.cdn_mode == "live" ? local.server_origin_id : local.static_origin_id
+  server_origin_id     = "ghostServerOrigin"
+  server_api_origin_id = "ghostServerAPIOrigin"
+  static_origin_id     = "ghostStaticOrigin"
+  origin_id            = var.cdn_mode == "live" ? local.server_origin_id : local.static_origin_id
 
   acm_cert_arn = var.acm_cert_arn
 
@@ -86,5 +87,5 @@ locals {
   viewer_request_lambda_arn  = local.use_default_request_lambda ? [module.default-cloudfront-s3-viewer-request-lambda[0].qualified_arn] : [var.viewer_request_lambda_arn]
 
   friendly_captcha_sitekey = var.friendly_captcha_sitekey
-  friendly_captcha_apikey = var.friendly_captcha_apikey
+  friendly_captcha_apikey  = var.friendly_captcha_apikey
 }

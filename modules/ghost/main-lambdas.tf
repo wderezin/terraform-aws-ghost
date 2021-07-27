@@ -1,5 +1,5 @@
 
-module default-cloudfront-s3-viewer-request-lambda {
+module "default-cloudfront-s3-viewer-request-lambda" {
   count = local.use_default_request_lambda ? 1 : 0
 
   source               = "daringway/cloudfront-viewer-request-lambda/aws"
@@ -9,5 +9,5 @@ module default-cloudfront-s3-viewer-request-lambda {
   apex_domain_redirect = true
   index_rewrite        = var.cdn_mode == "static"
   append_slash         = true
-  ghost_hostname       = local.cms_fqdn
+  //  ghost_hostname       = local.cms_fqdn
 }

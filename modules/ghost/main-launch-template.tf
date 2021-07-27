@@ -1,5 +1,5 @@
 
-resource aws_route53_record cms {
+resource "aws_route53_record" "cms" {
   zone_id = data.aws_route53_zone.zone.zone_id
   name    = local.cms_fqdn
   type    = "A"
@@ -16,7 +16,7 @@ resource aws_route53_record cms {
   }
 }
 
-data aws_ami default {
+data "aws_ami" "default" {
   //  ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-20201026 (ami-0885b1f6bd170450c)
   most_recent = true
   name_regex  = "^ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"
@@ -33,17 +33,17 @@ data aws_ami default {
   }
 }
 
-resource aws_launch_template default {
+resource "aws_launch_template" "default" {
   name     = local.base_name
   image_id = data.aws_ami.default.id
 
-//  instance_market_options {
-//    market_type = "spot"
-//    spot_options {
-//      spot_instance_type = persistent
-//      instance_interruption_behavior = "stop"
-//    }
-//  }
+  //  instance_market_options {
+  //    market_type = "spot"
+  //    spot_options {
+  //      spot_instance_type = persistent
+  //      instance_interruption_behavior = "stop"
+  //    }
+  //  }
 
   instance_type = "t3a.micro"
 
@@ -76,12 +76,12 @@ resource aws_launch_template default {
 }
 
 
-resource aws_iam_instance_profile ec2_profile {
+resource "aws_iam_instance_profile" "ec2_profile" {
   name = local.instance_profile_name
   role = aws_iam_role.ec2_role.name
 }
 
-data aws_iam_policy_document ec2_assume_policy_document {
+data "aws_iam_policy_document" "ec2_assume_policy_document" {
   version = "2012-10-17"
 
   statement {
@@ -93,22 +93,22 @@ data aws_iam_policy_document ec2_assume_policy_document {
   }
 }
 
-resource aws_iam_role ec2_role {
+resource "aws_iam_role" "ec2_role" {
   name               = local.instance_profile_name
   path               = "/"
   assume_role_policy = data.aws_iam_policy_document.ec2_assume_policy_document.json
   tags               = local.tags
 }
 
-data aws_iam_policy_document ec2_access_policy_document {
+data "aws_iam_policy_document" "ec2_access_policy_document" {
   version = "2012-10-17"
 
   statement {
     effect = "Allow"
     actions = [
-//      Update IP Address and TLS (acme.sh)
+      //      Update IP Address and TLS (acme.sh)
       "route53:ChangeResourceRecordSets",
-//      Needed by (acme.sh)
+      //      Needed by (acme.sh)
       "route53:GetHostedZone",
       "route53:ListResourceRecordSets"
     ]
@@ -190,7 +190,7 @@ data aws_iam_policy_document ec2_access_policy_document {
   }
 }
 
-resource aws_iam_role_policy ec2_access_policy {
+resource "aws_iam_role_policy" "ec2_access_policy" {
   name   = "access_policy"
   role   = aws_iam_role.ec2_role.id
   policy = data.aws_iam_policy_document.ec2_access_policy_document.json

@@ -1,18 +1,18 @@
 
-resource aws_db_subnet_group default {
+resource "aws_db_subnet_group" "default" {
   name       = local.base_name
   subnet_ids = local.subnet_ids
 
   tags = merge(local.database_tags, { Function : "network" })
 }
 
-resource random_password adminpassword {
+resource "random_password" "adminpassword" {
   for_each = toset([local.password_change_id])
   length   = 32
   special  = false
 }
 
-resource aws_rds_cluster_parameter_group enhanced {
+resource "aws_rds_cluster_parameter_group" "enhanced" {
   name   = local.base_name
   family = "aurora-mysql5.7"
   tags   = local.database_tags
@@ -59,7 +59,7 @@ resource "aws_rds_cluster" "default" {
   }
 }
 
-resource aws_security_group rds {
+resource "aws_security_group" "rds" {
   name        = "${local.base_name}-rds"
   description = "Allow SQL"
   vpc_id      = local.vpc_id

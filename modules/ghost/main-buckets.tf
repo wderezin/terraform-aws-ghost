@@ -1,5 +1,5 @@
 
-resource aws_s3_bucket cms {
+resource "aws_s3_bucket" "cms" {
   bucket = local.cms_bucket_name
 
   force_destroy = true
@@ -21,7 +21,7 @@ resource aws_s3_bucket cms {
   }
 }
 
-resource aws_s3_bucket web {
+resource "aws_s3_bucket" "web" {
   bucket = local.web_bucket_name
 
   force_destroy = true
@@ -33,7 +33,7 @@ resource aws_s3_bucket web {
   }
 }
 
-resource aws_s3_bucket_public_access_block access {
+resource "aws_s3_bucket_public_access_block" "access" {
   depends_on = [aws_s3_bucket.cms, aws_s3_bucket.web]
 
   for_each = local.buckets
@@ -45,7 +45,7 @@ resource aws_s3_bucket_public_access_block access {
   block_public_policy     = true
 }
 
-data aws_iam_policy_document web {
+data "aws_iam_policy_document" "web" {
   statement {
     actions   = ["s3:ListBucket"]
     resources = [aws_s3_bucket.web.arn]
@@ -67,7 +67,7 @@ data aws_iam_policy_document web {
   }
 }
 
-resource aws_s3_bucket_policy web {
+resource "aws_s3_bucket_policy" "web" {
   bucket = aws_s3_bucket.web.id
   policy = data.aws_iam_policy_document.web.json
 }
