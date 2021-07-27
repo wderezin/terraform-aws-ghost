@@ -99,6 +99,7 @@ resource aws_cloudfront_distribution www {
       "POST",
       "PATCH",
       "DELETE"]
+    cached_methods = []
     target_origin_id = local.server_origin_id
 
     forwarded_values {
