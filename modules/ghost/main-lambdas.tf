@@ -9,5 +9,5 @@ module "default-cloudfront-s3-viewer-request-lambda" {
   apex_domain_redirect = true
   index_rewrite        = local.cdn_mode == "static"
   append_slash         = local.cdn_mode == "static"
-  ghost_hostname       = local.cdn_mode == "static" ? local.cms_fqdn : null
+  ghost_hostname       = local.cdn_mode == "static" ? local.cms_fqdn : ""
 }
