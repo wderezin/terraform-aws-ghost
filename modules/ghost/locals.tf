@@ -63,7 +63,7 @@ locals {
   //  ***** CLOUDFRONT main-cloudfront-s3.tf
   cdn_mode = var.cdn_mode
 
-  is_static = contains(["local"], var.cdn_mode)
+  is_static = contains(["static"], var.cdn_mode)
   is_live   = contains(["live"], var.cdn_mode)
 
   enable_static = local.is_static ? ["enabled"] : []
