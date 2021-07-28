@@ -146,6 +146,7 @@ data "aws_iam_policy_document" "ec2_access_policy_document" {
       "s3:GetObject",
       "s3:DeleteObject",
       "s3:AbortMultipartUpload",
+      "s3:ListBucket",
       "s3:ListMultipartUploadParts"
     ]
     resources = [
