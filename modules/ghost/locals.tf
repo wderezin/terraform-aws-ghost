@@ -5,9 +5,10 @@ locals {
 
   application = var.application
   // ssm
-  parameter_prefix = "/application/${local.application}/"
-  instance_size    = var.instance_size
-  ghost_api_key    = var.ghost_api_key
+  parameter_prefix   = "/application/${local.application}/"
+  instance_size      = var.instance_size
+  ghost_api_key      = var.ghost_api_key
+  enable_root_domain = var.enable_root_domain
 
   tags = merge(
     //    Default Tag Values
