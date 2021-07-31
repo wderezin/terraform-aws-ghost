@@ -104,6 +104,17 @@ data "aws_iam_policy_document" "ec2_access_policy_document" {
   version = "2012-10-17"
 
   statement {
+    //      Needed by (acme.sh)
+    effect = "Allow"
+    actions = [
+      "route53:ListHostedZones"
+    ]
+    resources = [
+      "*"
+    ]
+  }
+
+  statement {
     effect = "Allow"
     actions = [
       //      Update IP Address and TLS (acme.sh)
