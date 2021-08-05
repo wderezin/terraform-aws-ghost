@@ -19,8 +19,8 @@ resource "aws_route53_record" "cms" {
 data "aws_ami" "default" {
   //  ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-20201026 (ami-0885b1f6bd170450c)
   most_recent = true
-  name_regex  = "^ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"
-  owners      = ["099720109477"]
+  name_regex  = "daringway-ghost-*"
+  owners      = ["self"]
 
   filter {
     name   = "is-public"
@@ -60,7 +60,7 @@ resource "aws_launch_template" "default" {
     security_groups             = local.security_groups
   }
 
-  user_data = filebase64("${path.module}/install.sh")
+  //  user_data = filebase64("${path.module}/install.sh")
 
   instance_initiated_shutdown_behavior = "terminate"
 
