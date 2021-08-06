@@ -17,7 +17,6 @@ resource "aws_route53_record" "cms" {
 }
 
 data "aws_ami" "default" {
-  //  ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-20201026 (ami-0885b1f6bd170450c)
   most_recent = true
   name_regex  = "daringway-ghost-*"
   owners      = ["self"]
