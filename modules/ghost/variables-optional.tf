@@ -1,7 +1,7 @@
 
 variable "instance_size" {
   type        = string
-  default     = "small"
+  default     = "micro"
   description = "Size of the instance in the t2, t3, and t3a class"
 }
 
