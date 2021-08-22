@@ -1,13 +1,4 @@
 
-//resource aws_spot_instance_request cms_server {
-//  launch_tempalte { id = aws_launch_template.default.id }
-//
-//  version = "$Latest"
-//  ami = ""
-//  instance_type = ""
-//}
-
-
 resource "aws_autoscaling_group" "ghost_server" {
   name             = local.application
   min_size         = 1
@@ -20,6 +11,11 @@ resource "aws_autoscaling_group" "ghost_server" {
 
   //  suspended_processes = []
   //  health_check_type = "ELB"
+
+  //  Trigger refresh when template changes
+  instance_refresh {
+    strategy = "Rolling"
+  }
 
   mixed_instances_policy {
     instances_distribution {
