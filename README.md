@@ -1,2 +1,3 @@
-# terraform-aws-cms
-Deployment of full stack for Content Management System.
+# terraform-aws-ghost
+
+Deployment of full stack to deploy multiple ghost CMS.

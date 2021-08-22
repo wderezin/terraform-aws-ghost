@@ -59,8 +59,6 @@ resource "aws_launch_template" "default" {
     security_groups             = local.security_groups
   }
 
-  //  user_data = filebase64("${path.module}/install.sh")
-
   instance_initiated_shutdown_behavior = "terminate"
 
   monitoring {
