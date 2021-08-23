@@ -15,6 +15,9 @@ resource "aws_autoscaling_group" "ghost_server" {
   //  Trigger refresh when template changes
   instance_refresh {
     strategy = "Rolling"
+    preferences {
+      instance_warmup = 240
+    }
   }
 
   mixed_instances_policy {
