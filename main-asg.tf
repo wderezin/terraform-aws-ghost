@@ -27,7 +27,8 @@ resource "aws_autoscaling_group" "ghost_server" {
     launch_template {
       launch_template_specification {
         launch_template_id = aws_launch_template.default.id
-        version            = "$Latest"
+        version             = aws_launch_template.default.latest_version
+        // version            = "$Latest"
       }
       override {
         instance_type = "t3a.${local.instance_size}"
