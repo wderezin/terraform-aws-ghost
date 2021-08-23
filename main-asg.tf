@@ -17,6 +17,12 @@ resource "aws_autoscaling_group" "ghost_server" {
     strategy = "Rolling"
   }
 
+//  Add here for instance_refresh
+  launch_template {
+    launch_template_id = aws_launch_template.default.id
+    version            = aws_launch_template.default.latest_version
+  }
+
   mixed_instances_policy {
     instances_distribution {
       on_demand_base_capacity                  = 0
