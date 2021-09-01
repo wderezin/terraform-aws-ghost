@@ -2,8 +2,9 @@
 module "default-cloudfront-s3-viewer-request-lambda" {
   count = local.use_default_request_lambda ? 1 : 0
 
-  source               = "daringway/cloudfront-viewer-request-lambda/aws"
-  version              = "1.2.2"
+  source = "git::ssh://git@github.com/daringway/terraform-aws-cloudfront-viewer-request-lambda.git?ref=redirect-issue-03"
+//  source               = "daringway/cloudfront-viewer-request-lambda/aws"
+//  version              = "1.2.2"
   tags                 = local.tags
   lambda_name          = "${local.application}-website-viewer_request"
   apex_domain_redirect = local.enable_root_domain
