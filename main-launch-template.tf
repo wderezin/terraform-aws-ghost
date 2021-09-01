@@ -36,14 +36,6 @@ resource "aws_launch_template" "default" {
   name     = local.base_name
   image_id = data.aws_ami.default.id
 
-  //  instance_market_options {
-  //    market_type = "spot"
-  //    spot_options {
-  //      spot_instance_type = persistent
-  //      instance_interruption_behavior = "stop"
-  //    }
-  //  }
-
   instance_type = "t3a.micro"
 
   //  disable_api_termination = true
