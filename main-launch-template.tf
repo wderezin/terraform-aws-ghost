@@ -53,7 +53,7 @@ resource "aws_launch_template" "default" {
 
   instance_initiated_shutdown_behavior = "terminate"
 
-#  Detailed monitoring
+  #  Detailed monitoring
   monitoring {
     enabled = false
   }

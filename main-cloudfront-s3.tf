@@ -8,30 +8,17 @@ resource "aws_cloudfront_origin_access_identity" "default" {
   comment = "Ghost S3 web bucket for ${local.application}"
 }
 
-#module "default-cloudfront-s3-viewer-request-lambda" {
-#  count = local.use_default_request_lambda ? 1 : 0
-#
-#  source               = "wderezin/cloudfront-viewer-request-lambda/aws"
-#  version              = "1.2.3"
-#  tags                 = local.tags
-#  lambda_name          = "${local.application}-website-viewer_request"
-#  apex_domain_redirect = local.enable_root_domain
-#  index_rewrite        = local.is_static
-#  append_slash         = true
-#  ghost_hostname       = local.is_static ? local.cms_fqdn : ""
-#}
-
 # This is use when communicaiton with the ghost server.
 resource "aws_cloudfront_function" "request" {
   name    = "${local.base_name}-viewer_request"
   runtime = "cloudfront-js-1.0"
   comment = "my function"
   publish = true
-  code    = templatefile("${path.module}/lambda/viewer_request.js", {
-      apex_redirect:        local.enable_root_domain
-      index_rewrite:        false
-      append_slash:         true
-#      ghost_hostname:       local.is_static ? local.cms_fqdn : ""
+  code = templatefile("${path.module}/lambda/viewer_request.js", {
+    apex_redirect : local.enable_root_domain
+    index_rewrite : false
+    append_slash : true
+    #      ghost_hostname:       local.is_static ? local.cms_fqdn : ""
   })
   lifecycle {
     create_before_destroy = true
@@ -146,7 +133,6 @@ resource "aws_cloudfront_distribution" "www" {
     connection_timeout  = 10
   }
 
-
   ordered_cache_behavior {
     path_pattern = "/ghost/*"
     allowed_methods = [
@@ -180,108 +166,97 @@ resource "aws_cloudfront_distribution" "www" {
     viewer_protocol_policy = "redirect-to-https"
   }
 
-  dynamic "default_cache_behavior" {
-    for_each = local.enable_live
-    content {
-      allowed_methods = [
-        "GET",
-        "HEAD",
-        "OPTIONS",
-        "PUT",
-        "POST",
-        "PATCH",
-        "DELETE"
-      ]
-      cached_methods = [
-        "HEAD",
-        "GET"
-      ]
-      target_origin_id = local.origin_id
+  default_cache_behavior {
+    allowed_methods = [
+      "GET",
+      "HEAD",
+      "OPTIONS",
+      "PUT",
+      "POST",
+      "PATCH",
+      "DELETE"
+    ]
+    cached_methods = [
+      "HEAD",
+      "GET"
+    ]
+    target_origin_id = local.origin_id
 
-      forwarded_values {
-        query_string = true
-        headers      = ["Origin", "Referer", "User-Agent"]
+    forwarded_values {
+      query_string = true
+      headers      = ["Origin", "Referer", "User-Agent"]
 
-        cookies {
-          forward = "all"
-        }
-      }
-
-#      dynamic "lambda_function_association" {
-#        for_each = local.viewer_request_lambda_arn
-#        content {
-#          event_type   = "viewer-request"
-#          lambda_arn   = lambda_function_association.value
-#          include_body = false
-#        }
-#      }
-
-      function_association {
-        event_type   = "viewer-request"
-        function_arn = aws_cloudfront_function.request.arn
-      }
-
-      //    3600 1 hour 86400 is 1 day and
-      min_ttl                = 0
-      default_ttl            = 86400
-      max_ttl                = 31536000
-      compress               = false
-      viewer_protocol_policy = "redirect-to-https"
-    }
-  }
-
-  dynamic "origin" {
-    for_each = local.enable_static
-    content {
-      domain_name = aws_s3_bucket.web.bucket_regional_domain_name
-      origin_id   = local.static_origin_id
-
-      s3_origin_config {
-        origin_access_identity = aws_cloudfront_origin_access_identity.default.cloudfront_access_identity_path
+      cookies {
+        forward = "all"
       }
     }
+
+    function_association {
+      event_type   = "viewer-request"
+      function_arn = aws_cloudfront_function.request.arn
+    }
+
+    //    3600 1 hour 86400 is 1 day and
+    min_ttl                = 0
+    default_ttl            = 86400
+    max_ttl                = 31536000
+    compress               = false
+    viewer_protocol_policy = "redirect-to-https"
+
   }
 
-#  dynamic "default_cache_behavior" {
-#    for_each = local.enable_static
-#    content {
-#      allowed_methods = [
-#        "GET",
-#        "HEAD",
-#        "OPTIONS"
-#      ]
-#      cached_methods = [
-#        "HEAD",
-#        "GET"
-#      ]
-#      target_origin_id = local.origin_id
-#
-#      forwarded_values {
-#        query_string = false
-#
-#        cookies {
-#          forward = "none"
-#        }
-#      }
-#
-#
-#      dynamic "lambda_function_association" {
-#        for_each = local.viewer_request_lambda_arn
-#        content {
-#          event_type   = "viewer-request"
-#          lambda_arn   = lambda_function_association.value
-#          include_body = false
-#        }
-#      }
-#
-#      //    3600 1 hour 86400 is 1 day and
-#      min_ttl                = 3600
-#      default_ttl            = 86400
-#      max_ttl                = 31536000
-#      compress               = true
-#      viewer_protocol_policy = "redirect-to-https"
-#    }
-#  }
+  #  dynamic "origin" {
+  #    for_each = local.enable_static
+  #    content {
+  #      domain_name = aws_s3_bucket.web.bucket_regional_domain_name
+  #      origin_id   = local.static_origin_id
+  #
+  #      s3_origin_config {
+  #        origin_access_identity = aws_cloudfront_origin_access_identity.default.cloudfront_access_identity_path
+  #      }
+  #    }
+  #  }
+
+  #  dynamic "default_cache_behavior" {
+  #    for_each = local.enable_static
+  #    content {
+  #      allowed_methods = [
+  #        "GET",
+  #        "HEAD",
+  #        "OPTIONS"
+  #      ]
+  #      cached_methods = [
+  #        "HEAD",
+  #        "GET"
+  #      ]
+  #      target_origin_id = local.origin_id
+  #
+  #      forwarded_values {
+  #        query_string = false
+  #
+  #        cookies {
+  #          forward = "none"
+  #        }
+  #      }
+  #
+  #
+  #      dynamic "lambda_function_association" {
+  #        for_each = local.viewer_request_lambda_arn
+  #        content {
+  #          event_type   = "viewer-request"
+  #          lambda_arn   = lambda_function_association.value
+  #          include_body = false
+  #        }
+  #      }
+  #
+  #      //    3600 1 hour 86400 is 1 day and
+  #      min_ttl                = 3600
+  #      default_ttl            = 86400
+  #      max_ttl                = 31536000
+  #      compress               = true
+  #      viewer_protocol_policy = "redirect-to-https"
+  #    }
+  #  }
 
 }
 

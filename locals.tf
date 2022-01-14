@@ -61,19 +61,10 @@ locals {
   buckets               = toset([local.cms_bucket_name, local.web_bucket_name])
   instance_profile_name = local.cms_fqdn
 
-  //  ***** CLOUDFRONT main-cloudfront-s3.tf
-  cdn_mode = var.cdn_mode
-
-  is_static = contains(["static"], var.cdn_mode)
-  is_live   = contains(["live"], var.cdn_mode)
-
-  enable_static = local.is_static ? ["enabled"] : []
-  enable_live   = local.is_live ? ["enabled"] : []
-
   server_origin_id     = "ghostServerOrigin"
   server_api_origin_id = "ghostServerAPIOrigin"
   static_origin_id     = "ghostStaticOrigin"
-  origin_id            = local.is_live ? local.server_origin_id : local.static_origin_id
+  origin_id            = local.server_origin_id
 
   acm_cert_arn = var.acm_cert_arn
 
