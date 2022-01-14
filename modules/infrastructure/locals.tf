@@ -12,7 +12,7 @@ locals {
     //    Default Tag Values
     {
       managed-by : "terraform",
-      Application : "daringway/content-infrastructure"
+      Application : "wderezin/content-infrastructure"
     },
     //    User Tag Value
     var.tags,
