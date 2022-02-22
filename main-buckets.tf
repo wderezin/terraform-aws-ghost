@@ -4,20 +4,33 @@ resource "aws_s3_bucket" "cms" {
 
   force_destroy = true
   tags          = local.tags
+}
 
-  versioning {
-    enabled = true
+resource "aws_s3_bucket_versioning" "cms" {
+  bucket = aws_s3_bucket.cms.id
+  versioning_configuration {
+    status = "Enabled"
   }
+}
 
-  lifecycle_rule {
-    id                                     = "auto-delete-after-30-days"
-    prefix                                 = ""
-    enabled                                = true
-    abort_incomplete_multipart_upload_days = 1
+resource "aws_s3_bucket_lifecycle_configuration" "cms" {
+  bucket = aws_s3_bucket.cms.id
+
+  rule {
+    id        = "auto-delete-after-30-days"
+    status    = "Enabled"
+
+    filter {
+      prefix = ""
+    }
+    abort_incomplete_multipart_upload {
+      days_after_initiation = 1
+    }
 
     noncurrent_version_expiration {
-      days = 30
+      noncurrent_days = 30
     }
+
   }
 }
 
@@ -27,9 +40,13 @@ resource "aws_s3_bucket" "web" {
   force_destroy = true
   tags          = local.tags
 
-  versioning {
-    //    No need to version as it can be reproduced from the CMS
-    enabled = false
+}
+
+resource "aws_s3_bucket_versioning" "web" {
+  bucket = aws_s3_bucket.web.id
+  //    No need to version as it can be reproduced from the CMS
+  versioning_configuration {
+    status = "Suspended"
   }
 }
 
